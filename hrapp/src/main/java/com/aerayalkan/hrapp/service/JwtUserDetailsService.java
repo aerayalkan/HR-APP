@@ -4,6 +4,7 @@ import com.aerayalkan.hrapp.dto.UserDto;
 import com.aerayalkan.hrapp.model.Employee;
 import com.aerayalkan.hrapp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -31,7 +33,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Employee not found with username: " + username);
         }
         return new org.springframework.security.core.userdetails.User(employee.getUsername(), employee.getPassword(),
-                new ArrayList<>());
+                employee.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList()));
     }
 
     public Employee save(UserDto user) {

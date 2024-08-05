@@ -40,4 +40,12 @@ public class InventoryService {
                 .orElseThrow(() -> new RuntimeException("Inventory not found for this id :: " + id));
         inventoryRepository.delete(inventory);
     }
+
+    public List<Inventory> getAssignedInventories(Long employeeId) {
+        return inventoryRepository.findByAssignmentsEmployeeId(employeeId);
+    }
+
+    public List<Inventory> getAvailableInventories() {
+        return inventoryRepository.findByAssignmentsIsNull();
+    }
 }

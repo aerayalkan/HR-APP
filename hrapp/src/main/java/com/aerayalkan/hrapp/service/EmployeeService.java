@@ -45,4 +45,8 @@ public class EmployeeService {
         }
         throw new RuntimeException("Employee not found with id: " + id);
     }
+
+    public Employee findByUsername(String username) {
+        return employeeRepository.findByUsername(username);
+    }
 }

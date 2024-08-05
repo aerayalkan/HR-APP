@@ -1,13 +1,15 @@
 package com.aerayalkan.hrapp.config;
 
 import com.aerayalkan.hrapp.service.JwtUserDetailsService;
+import com.aerayalkan.hrapp.config.JwtAuthenticationEntryPoint;
+import com.aerayalkan.hrapp.config.JwtRequestFilter;
 import com.aerayalkan.hrapp.util.JwtTokenUtil;
-import jakarta.servlet.ServletException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -49,6 +52,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/authenticate", "/register").permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/employee/**").hasRole("EMPLOYEE")
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling(exceptionHandling ->
