@@ -10,8 +10,8 @@ const Navbar = () => {
             <Link to="/">Home</Link>
             {user ? (
                 <>
-                    {user.roles.includes('ROLE_ADMIN') && <Link to="/admin">Admin Dashboard</Link>}
-                    {user.roles.includes('ROLE_EMPLOYEE') && <Link to="/employee">Employee Dashboard</Link>}
+                    {user.roles && user.roles.includes('ROLE_ADMIN') && <Link to="/admin">Admin Dashboard</Link>}
+                    {user.roles && user.roles.includes('ROLE_EMPLOYEE') && <Link to="/employee">Employee Dashboard</Link>}
                     <button onClick={logout}>Logout</button>
                 </>
             ) : (
