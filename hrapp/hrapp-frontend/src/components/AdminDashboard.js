@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import employeeService from '../services/employeeService';
 import inventoryService from '../services/inventoryService';
+import assignmentService from '../services/assignmentService'; // Yeni eklenen import
 import { useAuth } from '../services/authService';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
     const [employees, setEmployees] = useState([]);
     const [inventories, setInventories] = useState([]);
+    const [assignments, setAssignments] = useState([]); // Görevler için yeni state
     const { user } = useAuth();
 
     useEffect(() => {
-        if (user.role === 'ADMIN') {
+        if (user.roles.includes('ROLE_ADMIN')) {
             employeeService.getEmployees().then((response) => {
                 setEmployees(response.data);
             });
             inventoryService.getAllInventories().then((response) => {
                 setInventories(response.data);
             });
+            assignmentService.getAssignments().then((response) => { // Görevleri almak için yeni eklenen çağrı
+                setAssignments(response.data);
+            });
         }
-    }, [user.role]);
+    }, [user.roles]);
 
     return (
         <div className="admin-dashboard">
@@ -73,6 +78,33 @@ const AdminDashboard = () => {
                         <td>{inventory.status}</td>
                         <td>
                             <button onClick={() => window.location.href = `/update-inventory/${inventory.id}`}>Güncelle</button>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+            <h2>Görev Yönetimi</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Görev ID</th>
+                    <th>Görev Adı</th>
+                    <th>Görev Açıklaması</th>
+                    <th>Başlangıç Tarihi</th>
+                    <th>Bitiş Tarihi</th>
+                    <th>Güncelle</th>
+                </tr>
+                </thead>
+                <tbody>
+                {assignments.map((assignment) => (
+                    <tr key={assignment.id}>
+                        <td>{assignment.id}</td>
+                        <td>{assignment.name}</td>
+                        <td>{assignment.description}</td>
+                        <td>{assignment.startDate}</td>
+                        <td>{assignment.endDate}</td>
+                        <td>
+                            <button onClick={() => window.location.href = `/update-assignment/${assignment.id}`}>Güncelle</button>
                         </td>
                     </tr>
                 ))}

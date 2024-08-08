@@ -10,6 +10,15 @@ const getEmployees = () => {
     });
 };
 
+const getProfile = () => {
+    return axios.get(`${API_URL}/profile`, {
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+    });
+};
+
 export default {
     getEmployees,
+    getProfile,
 };
