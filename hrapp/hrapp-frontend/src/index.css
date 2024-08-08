@@ -6,7 +6,7 @@ body {
 }
 
 nav {
-  background-color: #333;
+  background-color: #ff274e;
   color: #fff;
   padding: 1em;
 }
@@ -26,7 +26,7 @@ nav ul li button {
   color: #fff;
   text-decoration: none;
   padding: 0.5em 1em;
-  background-color: #333;
+  background-color: #ffffff;
   border: none;
   cursor: pointer;
 }
@@ -52,14 +52,14 @@ table td {
 button {
   padding: 0.5em 1em;
   margin: 0.5em 0;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #ffffff;
+  color: #ff274e;
   border: none;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #ff274e;
 }
 
 form div {

@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
             console.log('Decoded Token:', decodedToken); // Decoded token'i kontrol etmek için log ekleyin
             const user = {
                 username: decodedToken.sub,
-                roles: decodedToken.roles
+                roles: decodedToken.roles || [] // Burada roles'in tanımlı olduğundan emin olun ve boş dizi verin
             };
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user));

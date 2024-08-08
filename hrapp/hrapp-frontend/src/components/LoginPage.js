@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { useAuth } from '../services/authService';
-import { useNavigate } from 'react-router-dom'; // useHistory yerine useNavigate kullanın
-import './Login.css'; // Login CSS dosyasını dahil ediyoruz
+import { useNavigate } from 'react-router-dom';
+import './Login.css';
 
-const LoginPage = () => { // Burada Login yerine LoginPage
+const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const { login } = useAuth();
-    const navigate = useNavigate(); // useHistory yerine useNavigate kullanın
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await login(username, password);
-            navigate('/'); // history.push yerine navigate kullanın
+            navigate('/');
         } catch (error) {
-            console.error('Login error:', error); // Hata mesajını log ekleyin
+            console.error('Login error:', error);
             alert('Login failed: ' + error.message);
         }
     };

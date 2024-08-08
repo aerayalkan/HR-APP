@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import employeeService from '../services/employeeService';
 import inventoryService from '../services/inventoryService';
-import assignmentService from '../services/assignmentService'; // Yeni eklenen import
+import assignmentService from '../services/assignmentService';
 import { useAuth } from '../services/authService';
 import './AdminDashboard.css';
 

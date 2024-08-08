@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import AdminDashboard from './components/AdminDashboard';
 import EmployeeDashboard from './components/EmployeeDashboard';
-import LoginPage from './components/LoginPage'; // Login yerine LoginPage kullanıyoruz
+import LoginPage from './components/LoginPage';
 import { AuthProvider } from './services/authService';
 
 const App = () => {
