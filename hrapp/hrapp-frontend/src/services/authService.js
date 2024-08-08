@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {jwtDecode} from 'jwt-decode'; // 'jwt-decode' paketini doğru bir şekilde import edin
+import {jwtDecode} from 'jwt-decode'; // 'jwt-decode' olarak import edin
 import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();

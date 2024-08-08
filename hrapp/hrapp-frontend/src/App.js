@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import AdminDashboard from './components/AdminDashboard';
 import EmployeeDashboard from './components/EmployeeDashboard';
-import LoginPage from './components/LoginPage';
+import LoginPage from './components/LoginPage'; // Login yerine LoginPage kullanıyoruz
 import { AuthProvider } from './services/authService';
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
                 <Routes>
                     <Route path="/admin" element={<AdminDashboard />} />
                     <Route path="/employee" element={<EmployeeDashboard />} />
-                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/login" element={<LoginPage />} /> {/* Login yerine LoginPage */}
                 </Routes>
             </Router>
         </AuthProvider>

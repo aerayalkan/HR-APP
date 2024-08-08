@@ -3,7 +3,7 @@ import { useAuth } from '../services/authService';
 import { useNavigate } from 'react-router-dom'; // useHistory yerine useNavigate kullanın
 import './Login.css'; // Login CSS dosyasını dahil ediyoruz
 
-const Login = () => {
+const LoginPage = () => { // Burada Login yerine LoginPage
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const { login } = useAuth();
@@ -38,4 +38,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default LoginPage;
