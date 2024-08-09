@@ -8,7 +8,7 @@ import './AdminDashboard.css';
 const AdminDashboard = () => {
     const [employees, setEmployees] = useState([]);
     const [inventories, setInventories] = useState([]);
-    const [assignments, setAssignments] = useState([]); // Görevler için yeni state
+    const [assignments, setAssignments] = useState([]);
     const { user } = useAuth();
 
     useEffect(() => {
@@ -19,7 +19,7 @@ const AdminDashboard = () => {
             inventoryService.getAllInventories().then((response) => {
                 setInventories(response.data);
             });
-            assignmentService.getAssignments().then((response) => { // Görevleri almak için yeni eklenen çağrı
+            assignmentService.getAssignments().then((response) => { // Görevleri almak için yeni eklediğim çağrı
                 setAssignments(response.data);
             });
         }

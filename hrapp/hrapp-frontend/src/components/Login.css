@@ -30,12 +30,12 @@
 .login-container button {
     width: 100%;
     padding: 10px;
-    background-color: #ff274e;
+    background-color: #005bff;
     color: white;
     border: none;
     cursor: pointer;
 }
 
 .login-container button:hover {
-    background-color: #ff274e;
+    background-color: #005bff;
 }

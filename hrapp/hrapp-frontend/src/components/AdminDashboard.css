@@ -3,7 +3,7 @@
 }
 
 .admin-dashboard h2 {
-    color: #ff3366;
+    color: #005bff;
     margin-bottom: 20px;
 }
 
@@ -20,12 +20,12 @@
 }
 
 .admin-dashboard th {
-    background-color: #ff3366;
+    background-color: #005bff;
     color: white;
 }
 
 .admin-dashboard button {
-    background-color: #ff3366;
+    background-color: #005bff;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -35,5 +35,5 @@
 }
 
 .admin-dashboard button:hover {
-    background-color: #e6004c;
+    background-color: #005bff;
 }

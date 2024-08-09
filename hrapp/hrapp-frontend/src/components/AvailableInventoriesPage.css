@@ -3,7 +3,7 @@
 }
 
 .available-inventories-page h1 {
-    color: #ff3366;
+    color: #005bff;
     margin-bottom: 20px;
 }
 
@@ -19,6 +19,6 @@
 }
 
 .available-inventories-page th {
-    background-color: #ff3366;
+    background-color: #005bff;
     color: white;
 }

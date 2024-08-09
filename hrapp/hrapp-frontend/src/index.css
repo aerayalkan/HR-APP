@@ -6,7 +6,7 @@ body {
 }
 
 nav {
-  background-color: #ff274e;
+  background-color: #005bff;
   color: #fff;
   padding: 1em;
 }
@@ -53,13 +53,13 @@ button {
   padding: 0.5em 1em;
   margin: 0.5em 0;
   background-color: #ffffff;
-  color: #ff274e;
+  color: #005bff;
   border: none;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #ff274e;
+  background-color: #005bff;
 }
 
 form div {

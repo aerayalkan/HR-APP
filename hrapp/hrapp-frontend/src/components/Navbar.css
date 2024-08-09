@@ -1,5 +1,5 @@
 .navbar {
-    background-color: #ff3366;
+    background-color: #005bff;
     padding: 15px;
     display: flex;
     justify-content: space-between;
@@ -23,7 +23,7 @@
 
 .nav-button {
     background-color: white;
-    color: #ff3366;
+    color: #005bff;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
@@ -31,10 +31,10 @@
 }
 
 .nav-button:hover {
-    background-color: #e6004c;
+    background-color: #005bff;
     color: white;
 }
 
 .nav-link:hover {
-    color: #e6004c;
+    color: #005bff;
 }
