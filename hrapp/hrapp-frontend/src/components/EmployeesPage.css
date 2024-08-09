@@ -1,0 +1,24 @@
+.employees-page {
+    padding: 20px;
+}
+
+.employees-page h1 {
+    color: #ff3366;
+    margin-bottom: 20px;
+}
+
+.employees-page table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.employees-page th, .employees-page td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.employees-page th {
+    background-color: #ff3366;
+    color: white;
+}

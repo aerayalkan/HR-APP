@@ -1,0 +1,24 @@
+.assignments-page {
+    padding: 20px;
+}
+
+.assignments-page h1 {
+    color: #ff3366;
+    margin-bottom: 20px;
+}
+
+.assignments-page table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.assignments-page th, .assignments-page td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.assignments-page th {
+    background-color: #ff3366;
+    color: white;
+}

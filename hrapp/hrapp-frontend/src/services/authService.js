@@ -11,18 +11,18 @@ export const AuthProvider = ({ children }) => {
         try {
             const response = await axios.post('http://localhost:8080/authenticate', { username, password });
             const token = response.data.token;
-            console.log('Token:', token); // Token'i kontrol etmek için log ekleyin
+            console.log('Token:', token);
             const decodedToken = jwtDecode(token);
-            console.log('Decoded Token:', decodedToken); // Decoded token'i kontrol etmek için log ekleyin
+            console.log('Decoded Token:', decodedToken);
             const user = {
                 username: decodedToken.sub,
-                roles: decodedToken.roles || [] // Burada roles'in tanımlı olduğundan emin olun ve boş dizi verin
+                roles: decodedToken.roles || []
             };
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user));
             setUser(user);
         } catch (error) {
-            console.error('Login failed:', error); // Hata mesajını log ekleyin
+            console.error('Login failed:', error);
             throw new Error('Login failed');
         }
     };

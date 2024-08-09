@@ -3,29 +3,37 @@
 }
 
 .admin-dashboard h2 {
-    color: #333;
-}
-
-.admin-dashboard button {
-    margin-bottom: 10px;
-    background-color: #ff274e;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
+    color: #ff3366;
+    margin-bottom: 20px;
 }
 
 .admin-dashboard table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.admin-dashboard table, th, td {
-    border: 1px solid black;
-}
-
-.admin-dashboard th, td {
-    padding: 10px;
+.admin-dashboard th, .admin-dashboard td {
+    border: 1px solid #ddd;
+    padding: 12px;
     text-align: left;
+}
+
+.admin-dashboard th {
+    background-color: #ff3366;
+    color: white;
+}
+
+.admin-dashboard button {
+    background-color: #ff3366;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.admin-dashboard button:hover {
+    background-color: #e6004c;
 }

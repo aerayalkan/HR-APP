@@ -1,0 +1,24 @@
+.inventories-page {
+    padding: 20px;
+}
+
+.inventories-page h1 {
+    color: #ff3366;
+    margin-bottom: 20px;
+}
+
+.inventories-page table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.inventories-page th, .inventories-page td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.inventories-page th {
+    background-color: #ff3366;
+    color: white;
+}
