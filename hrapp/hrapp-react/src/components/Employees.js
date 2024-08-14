@@ -1,19 +1,76 @@
 import React, { useEffect, useState } from 'react';
-import { getAllEmployees } from '../api';
+import { getAllEmployees, deleteEmployee, createEmployee, updateEmployee } from '../api';
 
 const Employees = () => {
     const [employees, setEmployees] = useState([]);
+    const [newEmployee, setNewEmployee] = useState({
+        firstName: '',
+        lastName: '',
+        department: '',
+        position: '',
+        tckn: '',
+        birthDate: '',
+        maritalStatus: '',
+        active: true,
+        employeeNumber: '',
+        profilePhoto: '',
+        username: '',
+        password: ''
+    });
+    const [editingEmployeeId, setEditingEmployeeId] = useState(null);
 
     useEffect(() => {
         const fetchEmployees = async () => {
-            const token = localStorage.getItem('token');
-            const response = await getAllEmployees(token);
-            console.log(response.data);  // Gelen veriyi konsolda kontrol edelim
+            const response = await getAllEmployees();
             setEmployees(response.data);
         };
 
         fetchEmployees();
     }, []);
+
+    const handleDelete = async (employeeId) => {
+        await deleteEmployee(employeeId);
+        setEmployees(employees.filter(employee => employee.id !== employeeId));
+    };
+
+    const handleAddOrUpdate = async (e) => {
+        e.preventDefault();
+        if (editingEmployeeId) {
+            // Update existing employee
+            await updateEmployee(editingEmployeeId, newEmployee);
+            setEmployees(employees.map(employee =>
+                employee.id === editingEmployeeId ? { ...newEmployee, id: editingEmployeeId } : employee
+            ));
+        } else {
+            // Add new employee
+            const response = await createEmployee(newEmployee);
+            setEmployees([...employees, response.data]);
+        }
+        resetForm();
+    };
+
+    const handleEdit = (employee) => {
+        setNewEmployee(employee);
+        setEditingEmployeeId(employee.id);
+    };
+
+    const resetForm = () => {
+        setNewEmployee({
+            firstName: '',
+            lastName: '',
+            department: '',
+            position: '',
+            tckn: '',
+            birthDate: '',
+            maritalStatus: '',
+            active: true,
+            employeeNumber: '',
+            profilePhoto: '',
+            username: '',
+            password: ''
+        });
+        setEditingEmployeeId(null);
+    };
 
     return (
         <div>
@@ -50,14 +107,116 @@ const Employees = () => {
                         <td className="px-4 py-2 border-b">{employee.profilePhoto}</td>
                         <td className="px-4 py-2 border-b">{employee.username}</td>
                         <td className="px-4 py-2 border-b">
-                            <button className="bg-secondary text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition">Edit</button>
-                            <button className="bg-danger text-white px-4 py-2 rounded-lg ml-2 hover:bg-red-600 transition">Delete</button>
+                            <button
+                                className="bg-secondary text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition"
+                                onClick={() => handleEdit(employee)}
+                            >
+                                Edit
+                            </button>
+                            <button
+                                className="bg-danger text-white px-4 py-2 rounded-lg ml-2 hover:bg-red-600 transition"
+                                onClick={() => handleDelete(employee.id)}
+                            >
+                                Delete
+                            </button>
                         </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
-            <button className="mt-6 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">Add New Employee</button>
+
+            <h3 className="text-xl font-bold mt-6 mb-4">{editingEmployeeId ? 'Edit Employee' : 'Add New Employee'}</h3>
+            <form onSubmit={handleAddOrUpdate} className="space-y-4">
+                <input
+                    type="text"
+                    placeholder="First Name"
+                    value={newEmployee.firstName}
+                    onChange={(e) => setNewEmployee({ ...newEmployee, firstName: e.target.value })}
+                    className="border rounded-lg px-4 py-2 w-full"
+                />
+                <input
+                    type="text"
+                    placeholder="Last Name"
+                    value={newEmployee.lastName}
+                    onChange={(e) => setNewEmployee({ ...newEmployee, lastName: e.target.value })}
+                    className="border rounded-lg px-4 py-2 w-full"
+                />
+                <input
+                    type="text"
+                    placeholder="TCKN"
+                    value={newEmployee.tckn}
+                    onChange={(e) => setNewEmployee({ ...newEmployee, tckn: e.target.value })}
+                    className="border rounded-lg px-4 py-2 w-full"
+                />
+                <input
+                    type="text"
+                    placeholder="Department"
+                    value={newEmployee.department}
+                    onChange={(e) => setNewEmployee({ ...newEmployee, department: e.target.value })}
+                    className="border rounded-lg px-4 py-2 w-full"
+                />
+                <input
+                    type="text"
+                    placeholder="Position"
+                    value={newEmployee.position}
+                    onChange={(e) => setNewEmployee({ ...newEmployee, position: e.target.value })}
+                    className="border rounded-lg px-4 py-2 w-full"
+                />
+                <input
+                    type="date"
+                    placeholder="Birth Date"
+                    value={newEmployee.birthDate}
+                    onChange={(e) => setNewEmployee({ ...newEmployee, birthDate: e.target.value })}
+                    className="border rounded-lg px-4 py-2 w-full"
+                />
+                <input
+                    type="text"
+                    placeholder="Marital Status"
+                    value={newEmployee.maritalStatus}
+                    onChange={(e) => setNewEmployee({ ...newEmployee, maritalStatus: e.target.value })}
+                    className="border rounded-lg px-4 py-2 w-full"
+                />
+                <input
+                    type="text"
+                    placeholder="Employee Number"
+                    value={newEmployee.employeeNumber}
+                    onChange={(e) => setNewEmployee({ ...newEmployee, employeeNumber: e.target.value })}
+                    className="border rounded-lg px-4 py-2 w-full"
+                />
+                <input
+                    type="text"
+                    placeholder="Profile Photo URL"
+                    value={newEmployee.profilePhoto}
+                    onChange={(e) => setNewEmployee({ ...newEmployee, profilePhoto: e.target.value })}
+                    className="border rounded-lg px-4 py-2 w-full"
+                />
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={newEmployee.username}
+                    onChange={(e) => setNewEmployee({ ...newEmployee, username: e.target.value })}
+                    className="border rounded-lg px-4 py-2 w-full"
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={newEmployee.password}
+                    onChange={(e) => setNewEmployee({ ...newEmployee, password: e.target.value })}
+                    className="border rounded-lg px-4 py-2 w-full"
+                />
+                <button type="submit" className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                    {editingEmployeeId ? 'Update Employee' : 'Add Employee'}
+                </button>
+                {editingEmployeeId && (
+                    <button
+                        type="button"
+                        className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition ml-4"
+                        onClick={resetForm}
+                    >
+                        Cancel
+                    </button>
+                )}
+            </form>
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Routes, Route } from 'react-router-dom';
 import EmployeeProfile from './EmployeeProfile';
 import MyInventories from './MyInventories';
 

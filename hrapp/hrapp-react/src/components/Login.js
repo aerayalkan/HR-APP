@@ -15,7 +15,7 @@ const Login = () => {
             const { token, roles } = response.data;
 
             localStorage.setItem('token', token);
-            localStorage.setItem('roles', roles);
+            localStorage.setItem('roles', JSON.stringify(roles));
 
             if (roles.includes('ROLE_ADMIN')) {
                 navigate('/admin/dashboard');
@@ -30,7 +30,7 @@ const Login = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-6 text-center text-primary">JFORCE</h2>
+                <h2 className="text-2xl font-bold mb-6 text-center text-primary">Login</h2>
                 <form onSubmit={handleLogin} className="space-y-6">
                     <div>
                         <label className="block text-gray-700">Username:</label>

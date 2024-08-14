@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { getAssignedInventories } from '../api';
+import { getMyInventories } from '../api';
 
 const MyInventories = () => {
     const [inventories, setInventories] = useState([]);
 
     useEffect(() => {
-        const fetchInventories = async () => {
-            const token = localStorage.getItem('token');
-            const response = await getAssignedInventories(token);
+        const fetchMyInventories = async () => {
+            const response = await getMyInventories();
             setInventories(response.data);
         };
 
-        fetchInventories();
+        fetchMyInventories();
     }, []);
 
     return (

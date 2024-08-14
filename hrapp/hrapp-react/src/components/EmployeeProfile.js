@@ -1,35 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { updateEmployee } from '../api';
 
 const EmployeeProfile = () => {
-    const [password, setPassword] = useState('');
+    const [employeeProfile, setEmployeeProfile] = useState({ password: '' });
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
+    useEffect(() => {
+        // Burada mevcut çalışan profilini API'den çekip state'e set edebilirsiniz.
+    }, []);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Password güncelleme işlemi burada yapılacak
+    const handleUpdate = async () => {
+        const employeeId = 1; // Çalışan'ın ID'si, oturumdan veya kullanıcıdan alınabilir.
+        const response = await updateEmployee(employeeId, employeeProfile);
+        setEmployeeProfile(response.data);
     };
 
     return (
         <div>
             <h2 className="text-2xl font-bold mb-6">My Profile</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
+            <div className="bg-white p-6 rounded-lg shadow-lg">
+                <div className="mb-4">
                     <label className="block text-gray-700">New Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        required
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
+                    <input type="password" value={employeeProfile.password} onChange={(e) => setEmployeeProfile({ ...employeeProfile, password: e.target.value })} className="border rounded-lg px-4 py-2 mb-2 w-full" />
                 </div>
-                <button type="submit" className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
-                    Update Password
-                </button>
-            </form>
+                <button className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition" onClick={handleUpdate}>Update Password</button>
+            </div>
         </div>
     );
 };

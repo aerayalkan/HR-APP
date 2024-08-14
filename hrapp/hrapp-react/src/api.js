@@ -1,152 +1,137 @@
 import axios from 'axios';
 
-// Backend API base URL
-const API_URL = 'http://localhost:8080/api';
+const BASE_URL = 'http://localhost:8080'; // API base URL
 
-// Axios instance
-const api = axios.create({
-    baseURL: API_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
-
-// Login API call
+// Login API
 export const login = async (username, password) => {
-    return await api.post('/authenticate', { username, password });
+    return await axios.post(`${BASE_URL}/authenticate`, { username, password });
 };
 
-// Fetch all employees
-export const getAllEmployees = async (token) => {
-    return await api.get('/employees', {
+// Tüm çalışanları getiren API isteği
+export const getAllEmployees = async () => {
+    const token = localStorage.getItem('token');
+    return await axios.get(`${BASE_URL}/api/employees`, {
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
+            'Authorization': `Bearer ${token}`
+        }
     });
 };
 
-// Fetch employee by ID
-export const getEmployeeById = async (id, token) => {
-    return await api.get(`/employees/${id}`, {
+// Yeni bir çalışan ekleyen API isteği
+export const createEmployee = async (employeeData) => {
+    const token = localStorage.getItem('token');
+    return await axios.post(`${BASE_URL}/api/employees`, employeeData, {
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
+            'Authorization': `Bearer ${token}`
+        }
     });
 };
 
-// Update employee details
-export const updateEmployee = async (id, employeeData, token) => {
-    return await api.put(`/employees/${id}`, employeeData, {
+// Çalışan güncelleyen API isteği
+export const updateEmployee = async (employeeId, employeeData) => {
+    const token = localStorage.getItem('token');
+    return await axios.put(`${BASE_URL}/api/employees/${employeeId}`, employeeData, {
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
+            'Authorization': `Bearer ${token}`
+        }
     });
 };
 
-// Delete employee
-export const deleteEmployee = async (id, token) => {
-    return await api.delete(`/employees/${id}`, {
+// Çalışan silen API isteği
+export const deleteEmployee = async (employeeId) => {
+    const token = localStorage.getItem('token');
+    return await axios.delete(`${BASE_URL}/api/employees/${employeeId}`, {
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
+            'Authorization': `Bearer ${token}`
+        }
     });
 };
 
-// Add new employee
-export const addEmployee = async (employeeData, token) => {
-    return await api.post('/employees', employeeData, {
+// Tüm envanterleri getiren API isteği
+export const getAllInventories = async () => {
+    const token = localStorage.getItem('token');
+    return await axios.get(`${BASE_URL}/inventories/all`, {
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
+            'Authorization': `Bearer ${token}`
+        }
     });
 };
 
-// Fetch all inventories
-export const getAllInventories = async (token) => {
-    return await api.get('/inventories/all', {
+// Yeni bir envanter ekleyen API isteği
+export const createInventory = async (inventoryData) => {
+    const token = localStorage.getItem('token');
+    return await axios.post(`${BASE_URL}/inventories`, inventoryData, {
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
+            'Authorization': `Bearer ${token}`
+        }
     });
 };
 
-// Fetch assigned inventories
-export const getAssignedInventories = async (token) => {
-    return await api.get('/inventories/assigned', {
+// Envanteri güncelleyen API isteği
+export const updateInventory = async (inventoryId, inventoryData) => {
+    const token = localStorage.getItem('token');
+    return await axios.put(`${BASE_URL}/inventories/${inventoryId}`, inventoryData, {
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
+            'Authorization': `Bearer ${token}`
+        }
     });
 };
 
-// Fetch available inventories
-export const getAvailableInventories = async (token) => {
-    return await api.get('/inventories/available', {
+// Envanteri silen API isteği
+export const deleteInventory = async (inventoryId) => {
+    const token = localStorage.getItem('token');
+    return await axios.delete(`${BASE_URL}/inventories/${inventoryId}`, {
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
+            'Authorization': `Bearer ${token}`
+        }
     });
 };
 
-// Update inventory details
-export const updateInventory = async (id, inventoryData, token) => {
-    return await api.put(`/inventories/${id}`, inventoryData, {
+// Tüm zimmetleri getiren API isteği
+export const getAllAssignments = async () => {
+    const token = localStorage.getItem('token');
+    return await axios.get(`${BASE_URL}/assignments`, {
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
+            'Authorization': `Bearer ${token}`
+        }
     });
 };
 
-// Delete inventory
-export const deleteInventory = async (id, token) => {
-    return await api.delete(`/inventories/${id}`, {
+// Yeni bir zimmet ekleyen API isteği
+export const createAssignment = async (assignmentData) => {
+    const token = localStorage.getItem('token');
+    return await axios.post(`${BASE_URL}/assignments`, assignmentData, {
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
+            'Authorization': `Bearer ${token}`
+        }
     });
 };
 
-// Add new inventory
-export const addInventory = async (inventoryData, token) => {
-    return await api.post('/inventories', inventoryData, {
+// Zimmeti güncelleyen API isteği
+export const updateAssignment = async (assignmentId, assignmentData) => {
+    const token = localStorage.getItem('token');
+    return await axios.put(`${BASE_URL}/assignments/${assignmentId}`, assignmentData, {
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
+            'Authorization': `Bearer ${token}`
+        }
     });
 };
 
-// Fetch assignments
-export const getAllAssignments = async (token) => {
-    return await api.get('/assignments', {
+// Zimmeti silen API isteği
+export const deleteAssignment = async (assignmentId) => {
+    const token = localStorage.getItem('token');
+    return await axios.delete(`${BASE_URL}/assignments/${assignmentId}`, {
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
+            'Authorization': `Bearer ${token}`
+        }
     });
 };
 
-// Add new assignment
-export const addAssignment = async (assignmentData, token) => {
-    return await api.post('/assignments', assignmentData, {
+export const getMyInventories = async () => {
+    const token = localStorage.getItem('token');
+    return await axios.get('/inventories/assigned', {
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-};
-
-// Update assignment
-export const updateAssignment = async (id, assignmentData, token) => {
-    return await api.put(`/assignments/${id}`, assignmentData, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-};
-
-// Delete assignment
-export const deleteAssignment = async (id, token) => {
-    return await api.delete(`/assignments/${id}`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+            'Authorization': `Bearer ${token}`
+        }
     });
 };
