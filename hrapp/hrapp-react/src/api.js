@@ -129,7 +129,7 @@ export const deleteAssignment = async (assignmentId) => {
 
 export const getMyInventories = async () => {
     const token = localStorage.getItem('token');
-    return await axios.get('/inventories/assigned', {
+    return await axios.get(`${BASE_URL}/inventories/assigned`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }

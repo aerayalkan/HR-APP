@@ -6,10 +6,14 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenUtil implements Serializable {
@@ -48,17 +52,30 @@ public class JwtTokenUtil implements Serializable {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return doGenerateToken(userDetails.getUsername(), accessTokenExpiration);
+        // Rolleri eklemek için claims kullanıyoruz
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList()));
+        return doGenerateToken(claims, userDetails.getUsername());
     }
 
     public String generateRefreshToken(UserDetails userDetails) {
-        return doGenerateToken(userDetails.getUsername(), refreshTokenExpiration);
+        return doGenerateToken(new HashMap<>(), userDetails.getUsername(), refreshTokenExpiration);
     }
 
-    private String doGenerateToken(String subject, long expirationTime) {
-        return Jwts.builder().setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+    private String doGenerateToken(Map<String, Object> claims, String subject, long expirationTime) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(SignatureAlgorithm.HS256, secret).compact();
+                .signWith(SignatureAlgorithm.HS256, secret)
+                .compact();
+    }
+
+    private String doGenerateToken(Map<String, Object> claims, String subject) {
+        return doGenerateToken(claims, subject, accessTokenExpiration);
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {

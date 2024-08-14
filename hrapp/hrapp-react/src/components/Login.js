@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../api';
+import {jwtDecode} from 'jwt-decode';
+
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -12,7 +14,12 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await login(username, password);
-            const { token, roles } = response.data;
+            const { token } = response.data;
+
+            // Token'ı decode etme
+            const decodedToken = jwtDecode(token);
+            console.log(decodedToken);
+            const roles = decodedToken.roles|| []; // Eğer roles yoksa boş bir dizi kullan
 
             localStorage.setItem('token', token);
             localStorage.setItem('roles', JSON.stringify(roles));
@@ -30,7 +37,7 @@ const Login = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-6 text-center text-primary">Login</h2>
+                <h2 className="text-2xl font-bold mb-6 text-center text-primary">JFORCE</h2>
                 <form onSubmit={handleLogin} className="space-y-6">
                     <div>
                         <label className="block text-gray-700">Username:</label>
