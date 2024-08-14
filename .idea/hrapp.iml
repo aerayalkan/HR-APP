@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
   <component name="AdditionalModuleElements">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/hrapp/hr-frontend" />
+      <excludeFolder url="file://$MODULE_DIR$/hrapp/hr-frontend/node_modules" />
+    </content>
+    <content url="file://$MODULE_DIR$/hrapp/hr-frontend/node_modules" />
   </component>
 </module>
