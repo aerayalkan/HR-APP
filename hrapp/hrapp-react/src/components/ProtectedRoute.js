@@ -1,11 +1,24 @@
-import React from 'react';
+import {jwtDecode} from 'jwt-decode';
 import { Navigate } from 'react-router-dom';
+
 
 const ProtectedRoute = ({ element: Component, roles, ...rest }) => {
     const token = localStorage.getItem('token');
+    let isTokenValid = false;
+
+    if (token) {
+        try {
+            const decodedToken = jwtDecode(token);
+            const currentTime = Date.now() / 1000; // current time in seconds
+            isTokenValid = decodedToken.exp > currentTime;
+        } catch (e) {
+            console.error('Invalid token', e);
+        }
+    }
+
     const userRoles = JSON.parse(localStorage.getItem('roles')) || [];
 
-    if (!token) {
+    if (!token || !isTokenValid) {
         return <Navigate to="/login" />;
     }
 

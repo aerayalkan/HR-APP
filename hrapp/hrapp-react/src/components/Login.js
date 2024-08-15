@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../api';
-import {jwtDecode} from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode'; // jwtDecode burada doğru şekilde import ediliyor
 import logo from '../assets/logo.png';
-
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -19,8 +18,9 @@ const Login = () => {
 
             // Token'ı decode etme
             const decodedToken = jwtDecode(token);
-            console.log(decodedToken);
-            const roles = decodedToken.roles|| []; // Eğer roles yoksa boş bir dizi kullan
+            console.log("Decoded Token:", decodedToken);
+            const roles = decodedToken.roles || []; // Eğer roles yoksa boş bir dizi kullan
+            console.log("User Roles:", roles);
 
             localStorage.setItem('token', token);
             localStorage.setItem('roles', JSON.stringify(roles));
@@ -49,6 +49,7 @@ const Login = () => {
                             onChange={(e) => setUsername(e.target.value)}
                             required
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                            autoComplete="username"  // autocomplete özelliği eklendi
                         />
                     </div>
                     <div>
@@ -59,6 +60,7 @@ const Login = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                            autoComplete="current-password"  // autocomplete özelliği eklendi
                         />
                     </div>
                     {error && <p className="text-red-500">{error}</p>}
