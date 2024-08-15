@@ -13,7 +13,9 @@ const App = () => {
                 <Route path="/login" element={<Login />} />
                 <Route
                     path="/admin/dashboard/*"
+                    path="/admin/*"
                     element={<ProtectedRoute element={AdminDashboard} roles={['ROLE_ADMIN']} />}
+
                 />
                 <Route
                     path="/employee/dashboard/*"

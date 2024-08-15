@@ -21,32 +21,49 @@ const Employees = () => {
 
     useEffect(() => {
         const fetchEmployees = async () => {
-            const response = await getAllEmployees();
-            setEmployees(response.data);
+            try {
+                const response = await getAllEmployees();
+                if (Array.isArray(response.data)) {
+                    setEmployees(response.data);
+                } else {
+                    console.error("Expected array but got:", response.data);
+                    setEmployees([]);
+                }
+            } catch (error) {
+                console.error('Error fetching employees:', error);
+            }
         };
 
         fetchEmployees();
     }, []);
 
     const handleDelete = async (employeeId) => {
-        await deleteEmployee(employeeId);
-        setEmployees(employees.filter(employee => employee.id !== employeeId));
+        try {
+            await deleteEmployee(employeeId);
+            setEmployees(employees.filter(employee => employee.id !== employeeId));
+        } catch (error) {
+            console.error('Error deleting employee:', error);
+        }
     };
 
     const handleAddOrUpdate = async (e) => {
         e.preventDefault();
-        if (editingEmployeeId) {
-            // Update existing employee
-            await updateEmployee(editingEmployeeId, newEmployee);
-            setEmployees(employees.map(employee =>
-                employee.id === editingEmployeeId ? { ...newEmployee, id: editingEmployeeId } : employee
-            ));
-        } else {
-            // Add new employee
-            const response = await createEmployee(newEmployee);
-            setEmployees([...employees, response.data]);
+        try {
+            if (editingEmployeeId) {
+                // Update existing employee
+                await updateEmployee(editingEmployeeId, newEmployee);
+                setEmployees(employees.map(employee =>
+                    employee.id === editingEmployeeId ? { ...newEmployee, id: editingEmployeeId } : employee
+                ));
+            } else {
+                // Add new employee
+                const response = await createEmployee(newEmployee);
+                setEmployees([...employees, response.data]);
+            }
+            resetForm();
+        } catch (error) {
+            console.error('Error adding/updating employee:', error);
         }
-        resetForm();
     };
 
     const handleEdit = (employee) => {
@@ -104,7 +121,11 @@ const Employees = () => {
                         <td className="px-4 py-2 border-b">{employee.maritalStatus}</td>
                         <td className="px-4 py-2 border-b">{employee.active ? 'Yes' : 'No'}</td>
                         <td className="px-4 py-2 border-b">{employee.employeeNumber}</td>
-                        <td className="px-4 py-2 border-b">{employee.profilePhoto}</td>
+                        <td className="px-4 py-2 border-b">
+                            {employee.profilePhoto ? (
+                                <img src={employee.profilePhoto} alt="Profile" className="h-8 w-8 rounded-full" />
+                            ) : 'N/A'}
+                        </td>
                         <td className="px-4 py-2 border-b">{employee.username}</td>
                         <td className="px-4 py-2 border-b">
                             <button
@@ -133,6 +154,7 @@ const Employees = () => {
                     value={newEmployee.firstName}
                     onChange={(e) => setNewEmployee({ ...newEmployee, firstName: e.target.value })}
                     className="border rounded-lg px-4 py-2 w-full"
+                    required
                 />
                 <input
                     type="text"
@@ -140,6 +162,7 @@ const Employees = () => {
                     value={newEmployee.lastName}
                     onChange={(e) => setNewEmployee({ ...newEmployee, lastName: e.target.value })}
                     className="border rounded-lg px-4 py-2 w-full"
+                    required
                 />
                 <input
                     type="text"
@@ -147,6 +170,7 @@ const Employees = () => {
                     value={newEmployee.tckn}
                     onChange={(e) => setNewEmployee({ ...newEmployee, tckn: e.target.value })}
                     className="border rounded-lg px-4 py-2 w-full"
+                    required
                 />
                 <input
                     type="text"
@@ -154,6 +178,7 @@ const Employees = () => {
                     value={newEmployee.department}
                     onChange={(e) => setNewEmployee({ ...newEmployee, department: e.target.value })}
                     className="border rounded-lg px-4 py-2 w-full"
+                    required
                 />
                 <input
                     type="text"
@@ -161,6 +186,7 @@ const Employees = () => {
                     value={newEmployee.position}
                     onChange={(e) => setNewEmployee({ ...newEmployee, position: e.target.value })}
                     className="border rounded-lg px-4 py-2 w-full"
+                    required
                 />
                 <input
                     type="date"
@@ -168,6 +194,7 @@ const Employees = () => {
                     value={newEmployee.birthDate}
                     onChange={(e) => setNewEmployee({ ...newEmployee, birthDate: e.target.value })}
                     className="border rounded-lg px-4 py-2 w-full"
+                    required
                 />
                 <input
                     type="text"
@@ -175,6 +202,7 @@ const Employees = () => {
                     value={newEmployee.maritalStatus}
                     onChange={(e) => setNewEmployee({ ...newEmployee, maritalStatus: e.target.value })}
                     className="border rounded-lg px-4 py-2 w-full"
+                    required
                 />
                 <input
                     type="text"
@@ -182,6 +210,7 @@ const Employees = () => {
                     value={newEmployee.employeeNumber}
                     onChange={(e) => setNewEmployee({ ...newEmployee, employeeNumber: e.target.value })}
                     className="border rounded-lg px-4 py-2 w-full"
+                    required
                 />
                 <input
                     type="text"
@@ -196,6 +225,7 @@ const Employees = () => {
                     value={newEmployee.username}
                     onChange={(e) => setNewEmployee({ ...newEmployee, username: e.target.value })}
                     className="border rounded-lg px-4 py-2 w-full"
+                    required
                 />
                 <input
                     type="password"
@@ -203,6 +233,7 @@ const Employees = () => {
                     value={newEmployee.password}
                     onChange={(e) => setNewEmployee({ ...newEmployee, password: e.target.value })}
                     className="border rounded-lg px-4 py-2 w-full"
+                    required
                 />
                 <button type="submit" className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
                     {editingEmployeeId ? 'Update Employee' : 'Add Employee'}
