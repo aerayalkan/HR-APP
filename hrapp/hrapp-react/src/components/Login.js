@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../api';
 import {jwtDecode} from 'jwt-decode';
+import logo from '../assets/logo.png';
 
 
 const Login = () => {
@@ -37,7 +38,8 @@ const Login = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-6 text-center text-primary">JFORCE</h2>
+                <img src={logo} alt="JFORCE Logo" className="mx-auto mb-6"/>
+                <h2 className="text-2xl font-bold mb-6 text-center text-primary">LOGIN</h2>
                 <form onSubmit={handleLogin} className="space-y-6">
                     <div>
                         <label className="block text-gray-700">Username:</label>
