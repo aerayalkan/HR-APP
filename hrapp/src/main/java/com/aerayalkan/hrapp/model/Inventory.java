@@ -1,7 +1,6 @@
 package com.aerayalkan.hrapp.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +31,13 @@ public class Inventory {
 
     @OneToMany(mappedBy = "inventory")
     private Set<Assignment> assignments = new HashSet<>();
+
+    @PrePersist
+    protected void onCreate() {
+        if (entryDate == null) {
+            entryDate = LocalDate.now();  // Eğer entryDate boşsa, varsayılan olarak bugünün tarihini atar.
+        }
+    }
 
     // Getters and Setters
     public Long getId() {

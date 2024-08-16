@@ -19,6 +19,7 @@ const App = () => {
                 />
                 <Route
                     path="/employee/dashboard/*"
+                    path="/employee/*"
                     element={<ProtectedRoute element={EmployeeDashboard} roles={['ROLE_EMPLOYEE']} />}
                 />
                 <Route path="*" element={<Navigate to="/" />} />
