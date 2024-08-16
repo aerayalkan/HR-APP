@@ -23,6 +23,7 @@ const Employees = () => {
         const fetchEmployees = async () => {
             try {
                 const response = await getAllEmployees();
+                console.log(response.data);
                 if (Array.isArray(response.data)) {
                     setEmployees(response.data);
                 } else {
