@@ -2,6 +2,7 @@ package com.aerayalkan.hrapp.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -55,6 +56,7 @@ public class Employee {
     @JoinTable(name = "employee_roles",
             joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @JsonManagedReference
     private Set<Role> roles;
 
     @Column(nullable = false, unique = true, length = 50)
@@ -63,7 +65,7 @@ public class Employee {
     @Column(nullable = false)
     private String password;
 
-    // Getters and Setters
+    // Getters and Setters (Hepsi dahil edilmiştir)
     public Long getId() {
         return id;
     }

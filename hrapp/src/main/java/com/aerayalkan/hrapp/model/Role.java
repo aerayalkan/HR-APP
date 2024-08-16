@@ -1,7 +1,7 @@
 package com.aerayalkan.hrapp.model;
 
 import jakarta.persistence.*;
-import java.util.HashSet;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.Set;
 
 @Entity
@@ -16,9 +16,10 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<Employee> Employees = new HashSet<>();
+    @JsonBackReference
+    private Set<Employee> employees;
 
-    // Getters and Setters
+    // Getters and Setters (Hepsi dahil edilmiştir)
     public Long getId() {
         return id;
     }
@@ -36,10 +37,10 @@ public class Role {
     }
 
     public Set<Employee> getEmployees() {
-        return Employees;
+        return employees;
     }
 
-    public void setEmployees(Set<Employee> Employees) {
-        this.Employees = Employees;
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
 }
