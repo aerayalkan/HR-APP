@@ -35,7 +35,7 @@ public class Inventory {
     @PrePersist
     protected void onCreate() {
         if (entryDate == null) {
-            entryDate = LocalDate.now();  // Eğer entryDate boşsa, varsayılan olarak bugünün tarihini atar.
+            entryDate = LocalDate.now();
         }
     }
 

@@ -5,11 +5,11 @@ const AdminProfile = () => {
     const [adminProfile, setAdminProfile] = useState({ firstName: '', lastName: '', username: '', password: '' });
 
     useEffect(() => {
-        // Burada mevcut admin profilini API'den çekip state'e set edebilirsiniz.
+
     }, []);
 
     const handleUpdate = async () => {
-        const employeeId = 1; // Admin'in ID'si, genelde sabit veya kullanıcıdan alınabilir.
+        const employeeId = 1;
         const response = await updateEmployee(employeeId, adminProfile);
         setAdminProfile(response.data);
     };

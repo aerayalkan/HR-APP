@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../api';
-import {jwtDecode} from 'jwt-decode'; // jwtDecode burada doğru şekilde import ediliyor
+import {jwtDecode} from 'jwt-decode';
 import logo from '../assets/logo.png';
 
 const Login = () => {
@@ -19,7 +19,7 @@ const Login = () => {
             // Token'ı decode etme
             const decodedToken = jwtDecode(token);
             console.log("Decoded Token:", decodedToken);
-            const roles = decodedToken.roles || []; // Eğer roles yoksa boş bir dizi kullan
+            const roles = decodedToken.roles || [];
             console.log("User Roles:", roles);
 
             localStorage.setItem('token', token);

@@ -7,7 +7,7 @@ export const login = async (username, password) => {
     return await axios.post(`${BASE_URL}/authenticate`, { username, password });
 };
 
-// Tüm çalışanları getiren API isteği
+// Tüm çalışanları getiren API
 export const getAllEmployees = async () => {
     const token = localStorage.getItem('token');
     return await axios.get(`${BASE_URL}/api/employees`, {
@@ -17,7 +17,7 @@ export const getAllEmployees = async () => {
     });
 };
 
-// Yeni bir çalışan ekleyen API isteği
+// Yeni bir çalışan ekleyen API
 export const createEmployee = async (employeeData) => {
     const token = localStorage.getItem('token');
     return await axios.post(`${BASE_URL}/api/employees`, employeeData, {
@@ -27,7 +27,7 @@ export const createEmployee = async (employeeData) => {
     });
 };
 
-// Çalışan güncelleyen API isteği
+// Çalışan güncelleyen API
 export const updateEmployee = async (employeeId, employeeData) => {
     const token = localStorage.getItem('token');
     return await axios.put(`${BASE_URL}/api/employees/${employeeId}`, employeeData, {
@@ -37,7 +37,7 @@ export const updateEmployee = async (employeeId, employeeData) => {
     });
 };
 
-// Çalışan silen API isteği
+// Çalışan silen API
 export const deleteEmployee = async (employeeId) => {
     const token = localStorage.getItem('token');
     return await axios.delete(`${BASE_URL}/api/employees/${employeeId}`, {
@@ -47,7 +47,7 @@ export const deleteEmployee = async (employeeId) => {
     });
 };
 
-// Tüm envanterleri getiren API isteği
+// Tüm envanterleri getiren API
 export const getAllInventories = async () => {
     const token = localStorage.getItem('token');
     return await axios.get(`${BASE_URL}/inventories/all`, {
@@ -57,7 +57,7 @@ export const getAllInventories = async () => {
     });
 };
 
-// Yeni bir envanter ekleyen API isteği
+// Yeni bir envanter ekleyen API
 export const createInventory = async (inventoryData) => {
     const token = localStorage.getItem('token');
     return await axios.post(`${BASE_URL}/inventories`, inventoryData, {
@@ -67,7 +67,7 @@ export const createInventory = async (inventoryData) => {
     });
 };
 
-// Envanteri güncelleyen API isteği
+// Envanteri güncelleyen API
 export const updateInventory = async (inventoryId, inventoryData) => {
     const token = localStorage.getItem('token');
     return await axios.put(`${BASE_URL}/inventories/${inventoryId}`, inventoryData, {
@@ -77,7 +77,7 @@ export const updateInventory = async (inventoryId, inventoryData) => {
     });
 };
 
-// Envanteri silen API isteği
+// Envanteri silen API
 export const deleteInventory = async (inventoryId) => {
     const token = localStorage.getItem('token');
     return await axios.delete(`${BASE_URL}/inventories/${inventoryId}`, {
@@ -87,7 +87,7 @@ export const deleteInventory = async (inventoryId) => {
     });
 };
 
-// Tüm zimmetleri getiren API isteği
+// Tüm zimmetleri getiren API
 export const getAllAssignments = async () => {
     const token = localStorage.getItem('token');
     return await axios.get(`${BASE_URL}/assignments`, {
@@ -97,7 +97,7 @@ export const getAllAssignments = async () => {
     });
 };
 
-// Yeni bir zimmet ekleyen API isteği
+// Yeni bir zimmet ekleyen API
 export const createAssignment = async (assignmentData) => {
     const token = localStorage.getItem('token');
     return await axios.post(`${BASE_URL}/assignments`, assignmentData, {
@@ -107,7 +107,7 @@ export const createAssignment = async (assignmentData) => {
     });
 };
 
-// Zimmeti güncelleyen API isteği
+// Zimmeti güncelleyen API
 export const updateAssignment = async (assignmentId, assignmentData) => {
     const token = localStorage.getItem('token');
     return await axios.put(`${BASE_URL}/assignments/${assignmentId}`, assignmentData, {
@@ -117,7 +117,7 @@ export const updateAssignment = async (assignmentId, assignmentData) => {
     });
 };
 
-// Zimmeti silen API isteği
+// Zimmeti silen API
 export const deleteAssignment = async (assignmentId) => {
     const token = localStorage.getItem('token');
     return await axios.delete(`${BASE_URL}/assignments/${assignmentId}`, {

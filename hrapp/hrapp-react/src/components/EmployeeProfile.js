@@ -5,11 +5,11 @@ const EmployeeProfile = () => {
     const [employeeProfile, setEmployeeProfile] = useState({ password: '' });
 
     useEffect(() => {
-        // Burada mevcut çalışan profilini API'den çekip state'e set edebilirsiniz.
+
     }, []);
 
     const handleUpdate = async () => {
-        const employeeId = 1; // Çalışan'ın ID'si, oturumdan veya kullanıcıdan alınabilir.
+        const employeeId = 1;
         const response = await updateEmployee(employeeId, employeeProfile);
         setEmployeeProfile(response.data);
     };

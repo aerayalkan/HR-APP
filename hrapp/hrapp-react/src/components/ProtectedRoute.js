@@ -9,7 +9,7 @@ const ProtectedRoute = ({ element: Component, roles, ...rest }) => {
     if (token) {
         try {
             const decodedToken = jwtDecode(token);
-            const currentTime = Date.now() / 1000; // current time in seconds
+            const currentTime = Date.now() / 1000;
             isTokenValid = decodedToken.exp > currentTime;
         } catch (e) {
             console.error('Invalid token', e);

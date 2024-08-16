@@ -9,7 +9,7 @@ const Inventories = () => {
         model: '',
         serialNumber: '',
         status: '',
-        entryDate: '' // entryDate alanını ekledik
+        entryDate: ''
     });
     const [editingInventoryId, setEditingInventoryId] = useState(null);
 
@@ -64,7 +64,7 @@ const Inventories = () => {
             model: '',
             serialNumber: '',
             status: '',
-            entryDate: '' // Formu sıfırlarken entryDate'i de sıfırlıyoruz
+            entryDate: ''
         });
         setEditingInventoryId(null);
     };
