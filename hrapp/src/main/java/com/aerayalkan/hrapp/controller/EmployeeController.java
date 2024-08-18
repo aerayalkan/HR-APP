@@ -1,5 +1,6 @@
 package com.aerayalkan.hrapp.controller;
 
+import com.aerayalkan.hrapp.dto.UserDto;
 import com.aerayalkan.hrapp.model.Assignment;
 import com.aerayalkan.hrapp.model.Employee;
 import com.aerayalkan.hrapp.service.EmployeeService;
@@ -21,7 +22,8 @@ public class EmployeeController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<Employee> createEmployee(@RequestBody UserDto userDto) {
+        Employee employee = convertToEntity(userDto);
         return ResponseEntity.ok(employeeService.saveEmployee(employee));
     }
 
@@ -35,25 +37,11 @@ public class EmployeeController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody UserDto updatedUserDto) {
         Optional<Employee> employeeOpt = employeeService.getEmployeeById(id);
         if (employeeOpt.isPresent()) {
             Employee employee = employeeOpt.get();
-            employee.setFirstName(updatedEmployee.getFirstName());
-            employee.setLastName(updatedEmployee.getLastName());
-            employee.setDepartment(updatedEmployee.getDepartment());
-            employee.setPosition(updatedEmployee.getPosition());
-            employee.setBirthDate(updatedEmployee.getBirthDate());
-            employee.setMaritalStatus(updatedEmployee.getMaritalStatus());
-            employee.setActive(updatedEmployee.isActive());
-            employee.setEmployeeNumber(updatedEmployee.getEmployeeNumber());
-            employee.setProfilePhoto(updatedEmployee.getProfilePhoto());
-            employee.setAssignments(updatedEmployee.getAssignments());
-            employee.setEmploymentRecords(updatedEmployee.getEmploymentRecords());
-            employee.setRoles(updatedEmployee.getRoles());
-            employee.setUsername(updatedEmployee.getUsername());
-            employee.setPassword(updatedEmployee.getPassword());
-
+            updateEntityFromDto(updatedUserDto, employee);
             return ResponseEntity.ok(employeeService.saveEmployee(employee));
         }
         return ResponseEntity.notFound().build();
@@ -76,5 +64,37 @@ public class EmployeeController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Employee> updateEmployeeAssignments(@PathVariable Long id, @RequestBody Set<Assignment> assignments) {
         return ResponseEntity.ok(employeeService.updateEmployeeAssignments(id, assignments));
+    }
+
+    private Employee convertToEntity(UserDto userDto) {
+        Employee employee = new Employee();
+        employee.setFirstName(userDto.getFirstName());
+        employee.setLastName(userDto.getLastName());
+        employee.setTckn(userDto.getTckn());
+        employee.setDepartment(userDto.getDepartment());
+        employee.setPosition(userDto.getPosition());
+        employee.setBirthDate(userDto.getBirthDate());
+        employee.setMaritalStatus(userDto.getMaritalStatus());
+        employee.setActive(userDto.isActive());
+        employee.setEmployeeNumber(userDto.getEmployeeNumber());
+        employee.setProfilePhoto(userDto.getProfilePhoto());
+        employee.setUsername(userDto.getUsername());
+        employee.setPassword(userDto.getPassword());
+        return employee;
+    }
+
+    private void updateEntityFromDto(UserDto userDto, Employee employee) {
+        employee.setFirstName(userDto.getFirstName());
+        employee.setLastName(userDto.getLastName());
+        employee.setTckn(userDto.getTckn());
+        employee.setDepartment(userDto.getDepartment());
+        employee.setPosition(userDto.getPosition());
+        employee.setBirthDate(userDto.getBirthDate());
+        employee.setMaritalStatus(userDto.getMaritalStatus());
+        employee.setActive(userDto.isActive());
+        employee.setEmployeeNumber(userDto.getEmployeeNumber());
+        employee.setProfilePhoto(userDto.getProfilePhoto());
+        employee.setUsername(userDto.getUsername());
+        employee.setPassword(userDto.getPassword());
     }
 }

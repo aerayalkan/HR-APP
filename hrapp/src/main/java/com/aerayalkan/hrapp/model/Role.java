@@ -2,10 +2,13 @@ package com.aerayalkan.hrapp.model;
 
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.Set;
 
 @Entity
 @Table(name = "roles")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Role {
 
     @Id
@@ -16,10 +19,9 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    @JsonBackReference
     private Set<Employee> employees;
 
-    // Getters and Setters (Hepsi dahil edilmiştir)
+    // Getters and Setters
     public Long getId() {
         return id;
     }

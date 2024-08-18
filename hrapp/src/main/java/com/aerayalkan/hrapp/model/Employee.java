@@ -2,13 +2,15 @@ package com.aerayalkan.hrapp.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "employees")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Employee {
 
     @Id
@@ -46,17 +48,16 @@ public class Employee {
     @Column
     private String profilePhoto;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private Set<Assignment> assignments = new HashSet<>();
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private Set<EmploymentRecord> employmentRecords = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "employee_roles",
             joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    @JsonManagedReference
     private Set<Role> roles;
 
     @Column(nullable = false, unique = true, length = 50)
@@ -65,7 +66,7 @@ public class Employee {
     @Column(nullable = false)
     private String password;
 
-    // Getters and Setters (Hepsi dahil edilmiştir)
+    // Getters and Setters
     public Long getId() {
         return id;
     }

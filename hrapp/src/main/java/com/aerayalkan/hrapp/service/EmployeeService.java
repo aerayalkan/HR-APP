@@ -21,10 +21,11 @@ public class EmployeeService {
     private PasswordEncoder bcryptEncoder;
 
     public Employee saveEmployee(Employee employee) {
-        employee.setPassword(bcryptEncoder.encode(employee.getPassword()));
+        if (employee.getPassword() != null) {
+            employee.setPassword(bcryptEncoder.encode(employee.getPassword()));
+        }
         return employeeRepository.save(employee);
     }
-
 
     public Optional<Employee> getEmployeeById(Long id) {
         return employeeRepository.findById(id);

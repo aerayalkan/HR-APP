@@ -2,9 +2,12 @@ package com.aerayalkan.hrapp.model;
 
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.time.LocalDate;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class EmploymentRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,7 +15,6 @@ public class EmploymentRecord {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", nullable = false)
-    @JsonBackReference
     private Employee employee;
 
     @Column(nullable = false)
