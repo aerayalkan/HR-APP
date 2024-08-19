@@ -4,12 +4,16 @@ import Employees from './Employees';
 import Inventories from './Inventories';
 import Assignments from './Assignments';
 import AdminProfile from './AdminProfile';
+import { logout } from '../utils/logout';
 
 const AdminDashboard = () => {
     return (
         <div className="min-h-screen bg-gray-100">
-            <header className="bg-primary text-white py-4">
+            <header className="bg-primary text-white py-4 flex justify-between items-center">
                 <h1 className="text-3xl font-bold text-center">Admin Dashboard</h1>
+                <button onClick={logout} className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
+                    Logout
+                </button>
             </header>
             <div className="flex">
                 <nav className="w-64 bg-white shadow-lg p-4">
