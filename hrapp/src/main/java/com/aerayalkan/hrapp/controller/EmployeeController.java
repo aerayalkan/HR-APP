@@ -23,8 +23,8 @@ public class EmployeeController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Employee> createEmployee(@RequestBody UserDto userDto) {
-        Employee employee = convertToEntity(userDto);
-        return ResponseEntity.ok(employeeService.saveEmployee(employee));
+        Employee employee = employeeService.createEmployee(userDto);
+        return ResponseEntity.ok(employee);
     }
 
     @GetMapping("/{id}")
@@ -38,13 +38,8 @@ public class EmployeeController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody UserDto updatedUserDto) {
-        Optional<Employee> employeeOpt = employeeService.getEmployeeById(id);
-        if (employeeOpt.isPresent()) {
-            Employee employee = employeeOpt.get();
-            updateEntityFromDto(updatedUserDto, employee);
-            return ResponseEntity.ok(employeeService.saveEmployee(employee));
-        }
-        return ResponseEntity.notFound().build();
+        Employee employee = employeeService.updateEmployeeFromDto(id, updatedUserDto);
+        return ResponseEntity.ok(employee);
     }
 
     @DeleteMapping("/{id}")
@@ -64,37 +59,5 @@ public class EmployeeController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Employee> updateEmployeeAssignments(@PathVariable Long id, @RequestBody Set<Assignment> assignments) {
         return ResponseEntity.ok(employeeService.updateEmployeeAssignments(id, assignments));
-    }
-
-    private Employee convertToEntity(UserDto userDto) {
-        Employee employee = new Employee();
-        employee.setFirstName(userDto.getFirstName());
-        employee.setLastName(userDto.getLastName());
-        employee.setTckn(userDto.getTckn());
-        employee.setDepartment(userDto.getDepartment());
-        employee.setPosition(userDto.getPosition());
-        employee.setBirthDate(userDto.getBirthDate());
-        employee.setMaritalStatus(userDto.getMaritalStatus());
-        employee.setActive(userDto.isActive());
-        employee.setEmployeeNumber(userDto.getEmployeeNumber());
-        employee.setProfilePhoto(userDto.getProfilePhoto());
-        employee.setUsername(userDto.getUsername());
-        employee.setPassword(userDto.getPassword());
-        return employee;
-    }
-
-    private void updateEntityFromDto(UserDto userDto, Employee employee) {
-        employee.setFirstName(userDto.getFirstName());
-        employee.setLastName(userDto.getLastName());
-        employee.setTckn(userDto.getTckn());
-        employee.setDepartment(userDto.getDepartment());
-        employee.setPosition(userDto.getPosition());
-        employee.setBirthDate(userDto.getBirthDate());
-        employee.setMaritalStatus(userDto.getMaritalStatus());
-        employee.setActive(userDto.isActive());
-        employee.setEmployeeNumber(userDto.getEmployeeNumber());
-        employee.setProfilePhoto(userDto.getProfilePhoto());
-        employee.setUsername(userDto.getUsername());
-        employee.setPassword(userDto.getPassword());
     }
 }
