@@ -23,7 +23,6 @@ const Employees = () => {
         const fetchEmployees = async () => {
             try {
                 const response = await getAllEmployees();
-                console.log(response.data);
                 if (Array.isArray(response.data)) {
                     setEmployees(response.data);
                 } else {
@@ -39,6 +38,11 @@ const Employees = () => {
     }, []);
 
     const handleDelete = async (employeeId) => {
+        if (!employeeId) {
+            console.error('Employee ID is undefined.');
+            return;
+        }
+
         try {
             await deleteEmployee(employeeId);
             setEmployees(employees.filter(employee => employee.id !== employeeId));
@@ -51,13 +55,11 @@ const Employees = () => {
         e.preventDefault();
         try {
             if (editingEmployeeId) {
-                // Update existing employee
                 await updateEmployee(editingEmployeeId, newEmployee);
                 setEmployees(employees.map(employee =>
                     employee.id === editingEmployeeId ? { ...newEmployee, id: editingEmployeeId } : employee
                 ));
             } else {
-                // Add new employee
                 const response = await createEmployee(newEmployee);
                 setEmployees([...employees, response.data]);
             }
@@ -111,8 +113,8 @@ const Employees = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {employees.map(employee => (
-                    <tr key={employee.id} className="hover:bg-gray-100">
+                {employees.map((employee, index) => (
+                    <tr key={employee.id || index} className="hover:bg-gray-100">
                         <td className="px-4 py-2 border-b">{employee.firstName}</td>
                         <td className="px-4 py-2 border-b">{employee.lastName}</td>
                         <td className="px-4 py-2 border-b">{employee.tckn}</td>
@@ -144,6 +146,8 @@ const Employees = () => {
                         </td>
                     </tr>
                 ))}
+
+
                 </tbody>
             </table>
 

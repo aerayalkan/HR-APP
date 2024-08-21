@@ -9,6 +9,7 @@ import com.aerayalkan.hrapp.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +28,7 @@ public class EmployeeService {
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
+    @Transactional
     public Employee createEmployee(UserDto userDto) {
         Employee employee = convertToEntity(userDto);
         Set<Role> roles = new HashSet<>();
@@ -39,6 +41,7 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    @Transactional
     public Employee updateEmployeeFromDto(Long id, UserDto userDto) {
         Optional<Employee> employeeOpt = employeeRepository.findById(id);
         if (employeeOpt.isPresent()) {
@@ -53,14 +56,20 @@ public class EmployeeService {
         return employeeRepository.findById(id);
     }
 
+    @Transactional
     public void deleteEmployee(Long id) {
-        employeeRepository.deleteById(id);
+        if (employeeRepository.existsById(id)) {
+            employeeRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Employee not found with id: " + id);
+        }
     }
 
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
+    @Transactional
     public Employee updateEmployeeAssignments(Long id, Set<Assignment> assignments) {
         Optional<Employee> employeeOpt = employeeRepository.findById(id);
         if (employeeOpt.isPresent()) {
