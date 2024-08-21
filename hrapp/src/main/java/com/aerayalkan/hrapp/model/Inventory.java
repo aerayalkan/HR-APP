@@ -29,7 +29,7 @@ public class Inventory {
     @Column(nullable = false)
     private LocalDate entryDate;
 
-    @OneToMany(mappedBy = "inventory")
+    @OneToMany(mappedBy = "inventory", fetch = FetchType.LAZY)
     private Set<Assignment> assignments = new HashSet<>();
 
     @PrePersist

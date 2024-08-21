@@ -2,7 +2,10 @@ package com.aerayalkan.hrapp.controller;
 
 import com.aerayalkan.hrapp.model.Assignment;
 import com.aerayalkan.hrapp.model.Employee;
+import com.aerayalkan.hrapp.model.Role;
+import com.aerayalkan.hrapp.repository.RoleRepository;
 import com.aerayalkan.hrapp.service.EmployeeService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,9 +22,11 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+        employeeService.addRoleIfNotExist(employee, "ROLE_EMPLOYEE");
         return ResponseEntity.ok(employeeService.saveEmployee(employee));
     }
 
@@ -39,8 +44,10 @@ public class EmployeeController {
         Optional<Employee> employeeOpt = employeeService.getEmployeeById(id);
         if (employeeOpt.isPresent()) {
             Employee employee = employeeOpt.get();
+
             employee.setFirstName(updatedEmployee.getFirstName());
             employee.setLastName(updatedEmployee.getLastName());
+            employee.setTckn(updatedEmployee.getTckn());
             employee.setDepartment(updatedEmployee.getDepartment());
             employee.setPosition(updatedEmployee.getPosition());
             employee.setBirthDate(updatedEmployee.getBirthDate());
@@ -77,4 +84,5 @@ public class EmployeeController {
     public ResponseEntity<Employee> updateEmployeeAssignments(@PathVariable Long id, @RequestBody Set<Assignment> assignments) {
         return ResponseEntity.ok(employeeService.updateEmployeeAssignments(id, assignments));
     }
+
 }

@@ -2,11 +2,14 @@ package com.aerayalkan.hrapp.service;
 
 import com.aerayalkan.hrapp.model.Employee;
 import com.aerayalkan.hrapp.model.Assignment;
+import com.aerayalkan.hrapp.model.Role;
+import com.aerayalkan.hrapp.repository.RoleRepository;
 import com.aerayalkan.hrapp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -16,6 +19,9 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private PasswordEncoder bcryptEncoder;
@@ -49,5 +55,16 @@ public class EmployeeService {
 
     public Employee findByUsername(String username) {
         return employeeRepository.findByUsername(username);
+    }
+
+    // ROLE_EMPLOYEE'yi eklemek için
+    public void addRoleIfNotExist(Employee employee, String roleName) {
+        if (employee.getRoles() == null) {
+            employee.setRoles(new HashSet<>());
+        }
+        Role role = roleRepository.findByName(roleName);
+        if (role != null && !employee.getRoles().contains(role)) {
+            employee.getRoles().add(role);
+        }
     }
 }
