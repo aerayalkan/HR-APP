@@ -1,6 +1,5 @@
 package com.aerayalkan.hrapp.controller;
 
-import com.aerayalkan.hrapp.dto.UserDto;
 import com.aerayalkan.hrapp.model.Assignment;
 import com.aerayalkan.hrapp.model.Employee;
 import com.aerayalkan.hrapp.service.EmployeeService;
@@ -22,9 +21,8 @@ public class EmployeeController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Employee> createEmployee(@RequestBody UserDto userDto) {
-        Employee employee = employeeService.createEmployee(userDto);
-        return ResponseEntity.ok(employee);
+    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+        return ResponseEntity.ok(employeeService.saveEmployee(employee));
     }
 
     @GetMapping("/{id}")
@@ -37,9 +35,28 @@ public class EmployeeController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody UserDto updatedUserDto) {
-        Employee employee = employeeService.updateEmployeeFromDto(id, updatedUserDto);
-        return ResponseEntity.ok(employee);
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
+        Optional<Employee> employeeOpt = employeeService.getEmployeeById(id);
+        if (employeeOpt.isPresent()) {
+            Employee employee = employeeOpt.get();
+            employee.setFirstName(updatedEmployee.getFirstName());
+            employee.setLastName(updatedEmployee.getLastName());
+            employee.setDepartment(updatedEmployee.getDepartment());
+            employee.setPosition(updatedEmployee.getPosition());
+            employee.setBirthDate(updatedEmployee.getBirthDate());
+            employee.setMaritalStatus(updatedEmployee.getMaritalStatus());
+            employee.setActive(updatedEmployee.isActive());
+            employee.setEmployeeNumber(updatedEmployee.getEmployeeNumber());
+            employee.setProfilePhoto(updatedEmployee.getProfilePhoto());
+            employee.setAssignments(updatedEmployee.getAssignments());
+            employee.setEmploymentRecords(updatedEmployee.getEmploymentRecords());
+            employee.setRoles(updatedEmployee.getRoles());
+            employee.setUsername(updatedEmployee.getUsername());
+            employee.setPassword(updatedEmployee.getPassword());
+
+            return ResponseEntity.ok(employeeService.saveEmployee(employee));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
