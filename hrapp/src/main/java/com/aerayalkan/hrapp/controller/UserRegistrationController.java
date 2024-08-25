@@ -1,6 +1,6 @@
 package com.aerayalkan.hrapp.controller;
 
-import com.aerayalkan.hrapp.dto.UserDto;
+import com.aerayalkan.hrapp.model.Employee;
 import com.aerayalkan.hrapp.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class UserRegistrationController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> saveUser(@RequestBody UserDto userDto) throws Exception {
-        return ResponseEntity.ok(userDetailsService.save(userDto));
+    public ResponseEntity<?> saveUser(@RequestBody Employee employee) throws Exception {
+        return ResponseEntity.ok(userDetailsService.save(employee));
     }
 }

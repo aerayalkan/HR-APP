@@ -29,6 +29,7 @@ public class EmploymentRecord {
 
     private String endReason;
 
+
     // Getters and Setters
     public Long getId() {
         return id;

@@ -1,5 +1,8 @@
 package com.aerayalkan.hrapp.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -30,6 +33,7 @@ public class Inventory {
     private LocalDate entryDate;
 
     @OneToMany(mappedBy = "inventory", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Assignment> assignments = new HashSet<>();
 
     @PrePersist
@@ -37,6 +41,16 @@ public class Inventory {
         if (entryDate == null) {
             entryDate = LocalDate.now();
         }
+    }
+
+    // Default Constructor
+    public Inventory() {
+    }
+
+    // Constructor for JSON deserialization
+    @JsonCreator
+    public Inventory(@JsonProperty("id") Long id) {
+        this.id = id;
     }
 
     // Getters and Setters

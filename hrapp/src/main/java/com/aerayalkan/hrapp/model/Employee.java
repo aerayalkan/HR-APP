@@ -1,5 +1,7 @@
 package com.aerayalkan.hrapp.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -67,6 +69,8 @@ public class Employee {
 
     @Column(nullable = false)
     private String password;
+
+
 
     // Getters and Setters
     public Long getId() {

@@ -1,6 +1,5 @@
 package com.aerayalkan.hrapp.service;
 
-import com.aerayalkan.hrapp.dto.UserDto;
 import com.aerayalkan.hrapp.model.Employee;
 import com.aerayalkan.hrapp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,21 +34,25 @@ public class JwtUserDetailsService implements UserDetailsService {
                 employee.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList()));
     }
 
-    public Employee save(UserDto user) {
-        Employee employee = new Employee();
-        employee.setFirstName(user.getFirstName());
-        employee.setLastName(user.getLastName());
-        employee.setTckn(user.getTckn());
-        employee.setDepartment(user.getDepartment());
-        employee.setPosition(user.getPosition());
-        employee.setBirthDate(user.getBirthDate());
-        employee.setMaritalStatus(user.getMaritalStatus());
-        employee.setActive(user.isActive());
-        employee.setEmployeeNumber(user.getEmployeeNumber());
-        employee.setProfilePhoto(user.getProfilePhoto());
-        employee.setUsername(user.getUsername());
-        employee.setPassword(bcryptEncoder.encode(user.getPassword()));
+    public Employee save(Employee employee) {
+        // Yeni bir Employee nesnesi oluşturun ve gerekli alanları doldurun
+        Employee newEmployee = new Employee();
+        newEmployee.setFirstName(employee.getFirstName());
+        newEmployee.setLastName(employee.getLastName());
+        newEmployee.setTckn(employee.getTckn());
+        newEmployee.setDepartment(employee.getDepartment());
+        newEmployee.setPosition(employee.getPosition());
+        newEmployee.setBirthDate(employee.getBirthDate());
+        newEmployee.setMaritalStatus(employee.getMaritalStatus());
+        newEmployee.setActive(employee.isActive());
+        newEmployee.setEmployeeNumber(employee.getEmployeeNumber());
+        newEmployee.setProfilePhoto(employee.getProfilePhoto());
+        newEmployee.setUsername(employee.getUsername());
 
-        return employeeRepository.save(employee);
+        // Şifreyi hashleyin
+        newEmployee.setPassword(bcryptEncoder.encode(employee.getPassword()));
+
+        // Çalışanı kaydedin
+        return employeeRepository.save(newEmployee);
     }
 }
