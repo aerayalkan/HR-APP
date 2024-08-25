@@ -3,6 +3,7 @@ import { getAllInventories, createInventory, updateInventory, deleteInventory } 
 
 const Inventories = () => {
     const [inventories, setInventories] = useState([]);
+    const [filteredInventories, setFilteredInventories] = useState([]);
     const [newInventory, setNewInventory] = useState({
         type: '',
         brand: '',
@@ -11,6 +12,11 @@ const Inventories = () => {
         status: '',
         entryDate: ''
     });
+    const [filters, setFilters] = useState({
+        type: '',
+        brand: '',
+        status: ''
+    });
     const [editingInventoryId, setEditingInventoryId] = useState(null);
 
     useEffect(() => {
@@ -18,6 +24,7 @@ const Inventories = () => {
             try {
                 const response = await getAllInventories();
                 setInventories(response.data);
+                setFilteredInventories(response.data); // Initially show all inventories
             } catch (error) {
                 console.error('Envanterler yüklenirken bir hata oluştu:', error);
             }
@@ -26,16 +33,32 @@ const Inventories = () => {
         fetchInventories();
     }, []);
 
+    const applyFilter = () => {
+        let updatedInventories = inventories;
+        if (filters.type) {
+            updatedInventories = updatedInventories.filter(inventory => inventory.type === filters.type);
+        }
+        if (filters.brand) {
+            updatedInventories = updatedInventories.filter(inventory => inventory.brand === filters.brand);
+        }
+        if (filters.status) {
+            updatedInventories = updatedInventories.filter(inventory => inventory.status === filters.status);
+        }
+        setFilteredInventories(updatedInventories);
+    };
+
     const handleCreateOrUpdate = async () => {
         try {
             if (editingInventoryId) {
                 // Update existing inventory
                 const response = await updateInventory(editingInventoryId, newInventory);
                 setInventories(inventories.map(inv => inv.id === editingInventoryId ? response.data : inv));
+                applyFilter();
             } else {
                 // Create new inventory
                 const response = await createInventory(newInventory);
                 setInventories([...inventories, response.data]);
+                applyFilter();
             }
             resetForm();
         } catch (error) {
@@ -52,6 +75,7 @@ const Inventories = () => {
         try {
             await deleteInventory(id);
             setInventories(inventories.filter(inventory => inventory.id !== id));
+            applyFilter();
         } catch (error) {
             console.error('Envanter silinirken bir hata oluştu:', error);
         }
@@ -69,9 +93,42 @@ const Inventories = () => {
         setEditingInventoryId(null);
     };
 
+    const handleFilterChange = (e) => {
+        setFilters({ ...filters, [e.target.name]: e.target.value });
+    };
+
     return (
         <div>
             <h2 className="text-2xl font-bold mb-6">Inventories</h2>
+
+            {/* Filter Section */}
+            <div className="flex space-x-4 mb-6">
+                <select name="type" value={filters.type} onChange={handleFilterChange} className="border rounded-lg px-4 py-2">
+                    <option value="">All Types</option>
+                    {Array.from(new Set(inventories.map(inv => inv.type))).map(type => (
+                        <option key={type} value={type}>{type}</option>
+                    ))}
+                </select>
+
+                <select name="brand" value={filters.brand} onChange={handleFilterChange} className="border rounded-lg px-4 py-2">
+                    <option value="">All Brands</option>
+                    {Array.from(new Set(inventories.map(inv => inv.brand))).map(brand => (
+                        <option key={brand} value={brand}>{brand}</option>
+                    ))}
+                </select>
+
+                <select name="status" value={filters.status} onChange={handleFilterChange} className="border rounded-lg px-4 py-2">
+                    <option value="">All Status</option>
+                    <option value="Available">Available</option>
+                    <option value="In Use">In Use</option>
+                    <option value="Under Maintenance">Under Maintenance</option>
+                </select>
+
+                <button onClick={applyFilter} className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                    Filter
+                </button>
+            </div>
+
             <table className="min-w-full bg-white rounded-lg shadow-lg">
                 <thead>
                 <tr>
@@ -84,7 +141,7 @@ const Inventories = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {inventories.map(inventory => (
+                {filteredInventories.map(inventory => (
                     <tr key={inventory.id} className="hover:bg-gray-100">
                         <td className="px-4 py-2 border-b">{inventory.type}</td>
                         <td className="px-4 py-2 border-b">{inventory.brand}</td>
