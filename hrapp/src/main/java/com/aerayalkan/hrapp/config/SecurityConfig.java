@@ -54,6 +54,7 @@ public class SecurityConfig {
                                 .requestMatchers("/authenticate", "/register").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/employee/**").hasRole("EMPLOYEE")
+                                .requestMatchers("/uploads/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling(exceptionHandling ->

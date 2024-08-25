@@ -127,6 +127,7 @@ export const deleteAssignment = async (assignmentId) => {
     });
 };
 
+// Kullanıcının zimmetli envanterlerini getiren API
 export const getMyInventories = async () => {
     const token = localStorage.getItem('token');
     return await axios.get(`${BASE_URL}/inventories/assigned`, {
@@ -134,4 +135,20 @@ export const getMyInventories = async () => {
             'Authorization': `Bearer ${token}`
         }
     });
+};
+
+// Fotoğraf yükleme API'si
+export const uploadPhoto = async (file) => {
+    const token = localStorage.getItem('token');
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await axios.post(`${BASE_URL}/api/employees/uploadPhoto`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    return response.data;
 };

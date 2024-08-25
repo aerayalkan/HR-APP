@@ -2,25 +2,27 @@ package com.aerayalkan.hrapp.controller;
 
 import com.aerayalkan.hrapp.model.Assignment;
 import com.aerayalkan.hrapp.model.Employee;
-import com.aerayalkan.hrapp.model.Role;
-import com.aerayalkan.hrapp.repository.RoleRepository;
 import com.aerayalkan.hrapp.service.EmployeeService;
+import com.aerayalkan.hrapp.service.StorageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private StorageService storageService;
 
 
     @PostMapping
@@ -83,6 +85,15 @@ public class EmployeeController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Employee> updateEmployeeAssignments(@PathVariable Long id, @RequestBody Set<Assignment> assignments) {
         return ResponseEntity.ok(employeeService.updateEmployeeAssignments(id, assignments));
+    }
+
+    // Yeni Eklenen Fotoğraf Yükleme Endpoint'i
+    @PostMapping("/uploadPhoto")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> uploadPhoto(@RequestParam("file") MultipartFile file) {
+        String fileName = storageService.storeFile(file);
+        String fileDownloadUri = "/uploads/" + fileName; // Dosyanın indirilebilir URL'si
+        return ResponseEntity.ok(fileDownloadUri);
     }
 
 }

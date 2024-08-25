@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getAllEmployees, deleteEmployee, createEmployee, updateEmployee } from '../api';
+import { getAllEmployees, deleteEmployee, createEmployee, updateEmployee, uploadPhoto } from '../api';
 
 const Employees = () => {
     const [employees, setEmployees] = useState([]);
@@ -17,19 +17,14 @@ const Employees = () => {
         username: '',
         password: ''
     });
+    const [photoFile, setPhotoFile] = useState(null);
     const [editingEmployeeId, setEditingEmployeeId] = useState(null);
 
     useEffect(() => {
         const fetchEmployees = async () => {
             try {
                 const response = await getAllEmployees();
-                console.log(response.data);
-                if (Array.isArray(response.data)) {
-                    setEmployees(response.data);
-                } else {
-                    console.error("Expected array but got:", response.data);
-                    setEmployees([]);
-                }
+                setEmployees(response.data);
             } catch (error) {
                 console.error('Error fetching employees:', error);
             }
@@ -38,27 +33,34 @@ const Employees = () => {
         fetchEmployees();
     }, []);
 
-    const handleDelete = async (employeeId) => {
-        try {
-            await deleteEmployee(employeeId);
-            setEmployees(employees.filter(employee => employee.id !== employeeId));
-        } catch (error) {
-            console.error('Error deleting employee:', error);
-        }
+    const handleFileChange = (e) => {
+        setPhotoFile(e.target.files[0]);
     };
 
     const handleAddOrUpdate = async (e) => {
         e.preventDefault();
         try {
+            let uploadedPhotoPath = newEmployee.profilePhoto;
+            if (photoFile) {
+                // Fotoğraf dosyasını yükle ve yolda güncelle
+                uploadedPhotoPath = await uploadPhoto(photoFile);
+                console.log("Uploaded Photo Path:", uploadedPhotoPath);
+            }
+
+            const employeeData = {
+                ...newEmployee,
+                profilePhoto: uploadedPhotoPath
+            };
+
             if (editingEmployeeId) {
-                // Update existing employee
-                await updateEmployee(editingEmployeeId, newEmployee);
+                // Mevcut çalışanı güncelle
+                await updateEmployee(editingEmployeeId, employeeData);
                 setEmployees(employees.map(employee =>
-                    employee.id === editingEmployeeId ? { ...newEmployee, id: editingEmployeeId } : employee
+                    employee.id === editingEmployeeId ? { ...employeeData, id: editingEmployeeId } : employee
                 ));
             } else {
-                // Add new employee
-                const response = await createEmployee(newEmployee);
+                // Yeni çalışan ekle
+                const response = await createEmployee(employeeData);
                 setEmployees([...employees, response.data]);
             }
             resetForm();
@@ -67,9 +69,19 @@ const Employees = () => {
         }
     };
 
+
     const handleEdit = (employee) => {
         setNewEmployee(employee);
         setEditingEmployeeId(employee.id);
+    };
+
+    const handleDelete = async (employeeId) => {
+        try {
+            await deleteEmployee(employeeId);
+            setEmployees(employees.filter(employee => employee.id !== employeeId));
+        } catch (error) {
+            console.error('Error deleting employee:', error);
+        }
     };
 
     const resetForm = () => {
@@ -87,6 +99,7 @@ const Employees = () => {
             username: '',
             password: ''
         });
+        setPhotoFile(null);
         setEditingEmployeeId(null);
     };
 
@@ -124,7 +137,7 @@ const Employees = () => {
                         <td className="px-4 py-2 border-b">{employee.employeeNumber}</td>
                         <td className="px-4 py-2 border-b">
                             {employee.profilePhoto ? (
-                                <img src={employee.profilePhoto} alt="Profile" className="h-8 w-8 rounded-full" />
+                                <img src={`http://localhost:8080/uploads/${employee.profilePhoto}`} alt="Profile" className="h-8 w-8 rounded-full" />
                             ) : 'N/A'}
                         </td>
                         <td className="px-4 py-2 border-b">{employee.username}</td>
@@ -214,10 +227,8 @@ const Employees = () => {
                     required
                 />
                 <input
-                    type="text"
-                    placeholder="Profile Photo URL"
-                    value={newEmployee.profilePhoto}
-                    onChange={(e) => setNewEmployee({ ...newEmployee, profilePhoto: e.target.value })}
+                    type="file"
+                    onChange={handleFileChange} // Fotoğraf dosyasını seçme
                     className="border rounded-lg px-4 py-2 w-full"
                 />
                 <input
