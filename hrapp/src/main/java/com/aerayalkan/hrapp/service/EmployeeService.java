@@ -27,6 +27,15 @@ public class EmployeeService {
     private PasswordEncoder bcryptEncoder;
 
     public Employee saveEmployee(Employee employee) {
+        Set<Role> attachedRoles = new HashSet<>();
+        for (Role role : employee.getRoles()) {
+            Role attachedRole = roleRepository.findByName(role.getName());
+            if (attachedRole != null) {
+                attachedRoles.add(attachedRole);
+            }
+        }
+        employee.setRoles(attachedRoles);
+
         employee.setPassword(bcryptEncoder.encode(employee.getPassword()));
         return employeeRepository.save(employee);
     }
@@ -36,7 +45,19 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(Long id) {
-        employeeRepository.deleteById(id);
+        Optional<Employee> employeeOpt = employeeRepository.findById(id);
+        if (employeeOpt.isPresent()) {
+            Employee employee = employeeOpt.get();
+
+            // Rolleri temizle
+            employee.getRoles().clear();
+            employeeRepository.save(employee);
+
+            // Çalışanı sil
+            employeeRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Employee not found with id: " + id);
+        }
     }
 
     public List<Employee> getAllEmployees() {
@@ -66,5 +87,18 @@ public class EmployeeService {
         if (role != null && !employee.getRoles().contains(role)) {
             employee.getRoles().add(role);
         }
+    }
+
+    // Çalışanın rollerini güncelle
+    public void updateEmployeeRoles(Employee employee, Set<Role> updatedRoles) {
+        Set<Role> roles = new HashSet<>();
+        for (Role role : updatedRoles) {
+            Role existingRole = roleRepository.findByName(role.getName());
+            if (existingRole != null) {
+                roles.add(existingRole);
+            }
+        }
+        employee.setRoles(roles);
+        employeeRepository.save(employee);
     }
 }

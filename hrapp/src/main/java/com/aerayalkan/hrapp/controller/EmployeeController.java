@@ -1,7 +1,9 @@
 package com.aerayalkan.hrapp.controller;
 
+import com.aerayalkan.hrapp.model.Role;
 import com.aerayalkan.hrapp.model.Assignment;
 import com.aerayalkan.hrapp.model.Employee;
+import com.aerayalkan.hrapp.repository.RoleRepository;
 import com.aerayalkan.hrapp.service.EmployeeService;
 import com.aerayalkan.hrapp.service.StorageService;
 
@@ -11,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -23,6 +26,9 @@ public class EmployeeController {
 
     @Autowired
     private StorageService storageService;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
 
     @PostMapping
@@ -59,7 +65,17 @@ public class EmployeeController {
             employee.setProfilePhoto(updatedEmployee.getProfilePhoto());
             employee.setAssignments(updatedEmployee.getAssignments());
             employee.setEmploymentRecords(updatedEmployee.getEmploymentRecords());
-            employee.setRoles(updatedEmployee.getRoles());
+
+            // Rolleri güncelle
+            Set<Role> roles = new HashSet<>();
+            for (Role role : updatedEmployee.getRoles()) {
+                Role existingRole = roleRepository.findByName(role.getName());
+                if (existingRole != null) {
+                    roles.add(existingRole);
+                }
+            }
+            employee.setRoles(roles);
+
             employee.setUsername(updatedEmployee.getUsername());
             employee.setPassword(updatedEmployee.getPassword());
 
@@ -67,6 +83,7 @@ public class EmployeeController {
         }
         return ResponseEntity.notFound().build();
     }
+
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { getAllEmployees, deleteEmployee, createEmployee, updateEmployee, uploadPhoto } from '../api';
+import { getAllEmployees, deleteEmployee, createEmployee, updateEmployee, uploadPhoto, getAllRoles } from '../api';
 
 const Employees = () => {
     const [employees, setEmployees] = useState([]);
+    const [roles, setRoles] = useState([]); // Rol verilerini tutacak state
     const [newEmployee, setNewEmployee] = useState({
         firstName: '',
         lastName: '',
@@ -15,7 +16,8 @@ const Employees = () => {
         employeeNumber: '',
         profilePhoto: '',
         username: '',
-        password: ''
+        password: '',
+        roles: [] // Rol bilgilerini tutacak alan
     });
     const [photoFile, setPhotoFile] = useState(null);
     const [editingEmployeeId, setEditingEmployeeId] = useState(null);
@@ -30,11 +32,27 @@ const Employees = () => {
             }
         };
 
+        const fetchRoles = async () => {
+            try {
+                const response = await getAllRoles(); // Rolleri getiren API çağrısı
+                setRoles(response.data);
+            } catch (error) {
+                console.error('Error fetching roles:', error);
+            }
+        };
+
         fetchEmployees();
+        fetchRoles();
     }, []);
 
     const handleFileChange = (e) => {
         setPhotoFile(e.target.files[0]);
+    };
+
+    const handleRoleChange = (e) => {
+        const value = Array.from(e.target.selectedOptions, option => option.value);
+        const selectedRoles = roles.filter(role => value.includes(role.name));
+        setNewEmployee({ ...newEmployee, roles: selectedRoles });
     };
 
     const handleAddOrUpdate = async (e) => {
@@ -42,7 +60,6 @@ const Employees = () => {
         try {
             let uploadedPhotoPath = newEmployee.profilePhoto;
             if (photoFile) {
-                // Fotoğraf dosyasını yükle ve yolda güncelle
                 uploadedPhotoPath = await uploadPhoto(photoFile);
                 console.log("Uploaded Photo Path:", uploadedPhotoPath);
             }
@@ -53,13 +70,11 @@ const Employees = () => {
             };
 
             if (editingEmployeeId) {
-                // Mevcut çalışanı güncelle
                 await updateEmployee(editingEmployeeId, employeeData);
                 setEmployees(employees.map(employee =>
                     employee.id === editingEmployeeId ? { ...employeeData, id: editingEmployeeId } : employee
                 ));
             } else {
-                // Yeni çalışan ekle
                 const response = await createEmployee(employeeData);
                 setEmployees([...employees, response.data]);
             }
@@ -68,7 +83,6 @@ const Employees = () => {
             console.error('Error adding/updating employee:', error);
         }
     };
-
 
     const handleEdit = (employee) => {
         setNewEmployee(employee);
@@ -97,7 +111,8 @@ const Employees = () => {
             employeeNumber: '',
             profilePhoto: '',
             username: '',
-            password: ''
+            password: '',
+            roles: []
         });
         setPhotoFile(null);
         setEditingEmployeeId(null);
@@ -228,9 +243,19 @@ const Employees = () => {
                 />
                 <input
                     type="file"
-                    onChange={handleFileChange} // Fotoğraf dosyasını seçme
+                    onChange={handleFileChange}
                     className="border rounded-lg px-4 py-2 w-full"
                 />
+                <select
+                    multiple
+                    value={newEmployee.roles.map(role => role.name)}
+                    onChange={handleRoleChange}
+                    className="border rounded-lg px-4 py-2 w-full"
+                >
+                    {roles.map(role => (
+                        <option key={role.id} value={role.name}>{role.name}</option>
+                    ))}
+                </select>
                 <input
                     type="text"
                     placeholder="Username"

@@ -7,6 +7,16 @@ export const login = async (username, password) => {
     return await axios.post(`${BASE_URL}/authenticate`, { username, password });
 };
 
+// Rolleri getiren API
+export const getAllRoles = async () => {
+    const token = localStorage.getItem('token');
+    return await axios.get(`${BASE_URL}/api/roles`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+};
+
 // Tüm çalışanları getiren API
 export const getAllEmployees = async () => {
     const token = localStorage.getItem('token');

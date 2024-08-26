@@ -1,11 +1,8 @@
 package com.aerayalkan.hrapp.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -62,15 +59,13 @@ public class Employee {
     @JoinTable(name = "employee_roles",
             joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     @Column(nullable = false, unique = true, length = 50)
     private String username;
 
     @Column(nullable = false)
     private String password;
-
-
 
     // Getters and Setters
     public Long getId() {
