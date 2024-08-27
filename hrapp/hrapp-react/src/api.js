@@ -110,7 +110,7 @@ export const getAllAssignments = async () => {
 // Yeni bir zimmet ekleyen API
 export const createAssignment = async (assignmentData) => {
     const token = localStorage.getItem('token');
-    return await axios.post(`${BASE_URL}/assignments`, assignmentData, {
+    return await axios.post(`${BASE_URL}/assignments/save/`+assignmentData.employees.id, assignmentData, {
         headers: {
             'Authorization': `Bearer ${token}`
         }

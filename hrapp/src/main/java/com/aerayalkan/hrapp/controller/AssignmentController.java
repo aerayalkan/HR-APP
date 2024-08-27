@@ -2,6 +2,7 @@ package com.aerayalkan.hrapp.controller;
 
 import com.aerayalkan.hrapp.model.Assignment;
 import com.aerayalkan.hrapp.service.AssignmentService;
+import com.aerayalkan.hrapp.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -11,11 +12,14 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/assignments")
+@RequestMapping(path = "/assignments")
 public class AssignmentController {
 
     @Autowired
     private AssignmentService assignmentService;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     // Admin ve Employee yetkisine sahip herkes tüm zimmetleri görebilir
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
@@ -31,9 +35,10 @@ public class AssignmentController {
     }
 
     // Sadece Admin zimmet oluşturabilir
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping
-    public Assignment createAssignment(@Valid @RequestBody Assignment assignment) {
+    //@PreAuthorize//("hasRole('ADMIN')")
+    @PostMapping(path = "/save/{Employee_id}")
+    public Assignment createAssignment(@Valid @RequestBody Assignment assignment, @PathVariable Long Employee_id) {
+        assignment.setEmployee(employeeService.getEmployeeById(Employee_id).get());
         return assignmentService.createAssignment(assignment);
     }
 

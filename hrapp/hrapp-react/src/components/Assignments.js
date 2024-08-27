@@ -79,10 +79,10 @@ const Assignments = () => {
                 <tbody>
                 {assignments.map(assignment => (
                     <tr key={assignment.id} className="hover:bg-gray-100">
-                        <td className="px-4 py-2 border-b">{assignment.assignedBy}</td>
-                        <td className="px-4 py-2 border-b">{assignment.assignmentDate}</td>
-                        <td className="px-4 py-2 border-b">{assignment.inventory.model}</td> {/* Inventory bilgisi gösterilebilir */}
-                        <td className="px-4 py-2 border-b">{assignment.employees.firstName} {assignment.employees.lastName}</td>
+                        <td className="px-4 py-2 border-b">{assignment?.assignedBy}</td>
+                        <td className="px-4 py-2 border-b">{assignment?.assignmentDate}</td>
+                        <td className="px-4 py-2 border-b">{assignment?.inventory?.model}</td> {/* Inventory bilgisi gösterilebilir */}
+                        <td className="px-4 py-2 border-b">{assignment?.employees?.firstName} {assignment?.employees?.lastName}</td>
                         <td className="px-4 py-2 border-b">
                             <button className="bg-secondary text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition" onClick={() => handleUpdate(assignment.id)}>Edit</button>
                             <button className="bg-danger text-white px-4 py-2 rounded-lg ml-2 hover:bg-red-600 transition" onClick={() => handleDelete(assignment.id)}>Delete</button>
@@ -106,7 +106,7 @@ const Assignments = () => {
                 <select value={newAssignment.employees.id} onChange={(e) => setNewAssignment({ ...newAssignment, employees: { id: e.target.value } })} className="border rounded-lg px-4 py-2 mb-2 w-full">
                     <option value="">Select Employee</option>
                     {employees.map(employee => (
-                        <option key={employee.id} value={employee.id}>{employee.firstName} {employee.lastName}</option>
+                        <option key={employee?.id} value={employee?.id}>{employee?.firstName} {employee?.lastName}</option>
                     ))}
                 </select>
 
