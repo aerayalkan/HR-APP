@@ -14,7 +14,7 @@ const AdminDashboard = () => {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <header className="bg-primary text-white py-4 flex justify-center items-center relative">
+            <header className="text-white py-4 flex justify-center items-center relative" style={{ backgroundColor: '#3336f3' }}>
                 <h1 className="text-4xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>
                     Admin Dashboard
                 </h1>
@@ -29,27 +29,27 @@ const AdminDashboard = () => {
                     <nav className="w-64 bg-white shadow-lg p-4">
                         <ul className="space-y-4">
                             <li>
-                                <Link to="/admin" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
+                                <Link to="/admin" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition" style={{ hover: { backgroundColor: '#3336f3' } }}>
                                     Dashboard
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/admin/employees" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
+                                <Link to="/admin/employees" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition" style={{ hover: { backgroundColor: '#3336f3' } }}>
                                     Employees
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/admin/inventories" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
+                                <Link to="/admin/inventories" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition" style={{ hover: { backgroundColor: '#3336f3' } }}>
                                     Inventories
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/admin/assignments" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
+                                <Link to="/admin/assignments" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition" style={{ hover: { backgroundColor: '#3336f3' } }}>
                                     Assignments
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/admin/profile" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
+                                <Link to="/admin/profile" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition" style={{ hover: { backgroundColor: '#3336f3' } }}>
                                     Profile
                                 </Link>
                             </li>
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
                                 <Link
                                     to="/admin/employees"
                                     className="flex justify-center items-center h-[20vh] bg-white rounded-lg hover:bg-primary hover:text-white transition transform hover:scale-105 duration-300 ease-in-out"
-                                    style={{ boxShadow: '0 4px 6px rgba(0, 0, 255, 0.5)' }}
+                                    style={{ boxShadow: '0 4px 6px rgb(51, 54, 243)' }}
                                 >
                                     <span className="text-3xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>
                                         Employees
@@ -72,7 +72,7 @@ const AdminDashboard = () => {
                                 <Link
                                     to="/admin/inventories"
                                     className="flex justify-center items-center h-[20vh] bg-white rounded-lg hover:bg-primary hover:text-white transition transform hover:scale-105 duration-300 ease-in-out"
-                                    style={{ boxShadow: '0 4px 6px rgba(0, 0, 255, 0.5)' }}
+                                    style={{ boxShadow: '0 4px 6px rgb(51, 54, 243)' }}
                                 >
                                     <span className="text-3xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>
                                         Inventories
@@ -81,7 +81,7 @@ const AdminDashboard = () => {
                                 <Link
                                     to="/admin/assignments"
                                     className="flex justify-center items-center h-[20vh] bg-white rounded-lg hover:bg-primary hover:text-white transition transform hover:scale-105 duration-300 ease-in-out"
-                                    style={{ boxShadow: '0 4px 6px rgba(0, 0, 255, 0.5)' }}
+                                    style={{ boxShadow: '0 4px 6px rgb(51, 54, 243)' }}
                                 >
                                     <span className="text-3xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>
                                         Assignments
@@ -90,7 +90,7 @@ const AdminDashboard = () => {
                                 <Link
                                     to="/admin/profile"
                                     className="flex justify-center items-center h-[20vh] bg-white rounded-lg hover:bg-primary hover:text-white transition transform hover:scale-105 duration-300 ease-in-out"
-                                    style={{ boxShadow: '0 4px 6px rgba(0, 0, 255, 0.5)' }}
+                                    style={{ boxShadow: '0 4px 6px rgb(51, 54, 243)' }}
                                 >
                                     <span className="text-3xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>
                                         Profile
