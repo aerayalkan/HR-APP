@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllEmployees, deleteEmployee, createEmployee, updateEmployee, uploadPhoto, getAllRoles } from '../api';
 
+
 const Employees = () => {
     const [employees, setEmployees] = useState([]);
     const [roles, setRoles] = useState([]); // Rol verilerini tutacak state

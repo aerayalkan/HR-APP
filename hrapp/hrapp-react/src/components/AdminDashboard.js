@@ -5,18 +5,19 @@ import Inventories from './Inventories';
 import Assignments from './Assignments';
 import AdminProfile from './AdminProfile';
 import { logout } from '../utils/logout';
-import NewsSection from './NewsSection';
-import jforce1 from '../images/jforce1.jpg';
-import jforce2 from '../images/jforce2.jpg';
-import jforce3 from '../images/jforce3.jpg';
 
 const AdminDashboard = () => {
     const location = useLocation();
 
+    // Dashboard sayfasında mıyız kontrolü
+    const isDashboard = location.pathname === '/admin';
+
     return (
         <div className="min-h-screen bg-gray-100">
             <header className="bg-primary text-white py-4 flex justify-center items-center relative">
-                <h1 className="text-4xl font-bold">Admin Dashboard</h1>
+                <h1 className="text-4xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>
+                    Admin Dashboard
+                </h1>
                 <button
                     onClick={logout}
                     className="absolute right-4 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
@@ -24,54 +25,78 @@ const AdminDashboard = () => {
                 </button>
             </header>
             <div className="flex">
-                <nav className="w-64 bg-white shadow-lg p-4">
-                    <ul className="space-y-4">
-                        <li>
-                            <Link to="/admin" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
-                                Dashboard
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/admin/employees" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
-                                Employees
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/admin/inventories" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
-                                Inventories
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/admin/assignments" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
-                                Assignments
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/admin/profile" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
-                                Profile
-                            </Link>
-                        </li>
-                    </ul>
-                </nav>
-                <main className="flex-1 p-2">
-                    {/* Haberler sadece "/admin" rotasında görünecek */}
-                    {location.pathname === '/admin' && (
-                        <div className="flex justify-between flex-wrap">
-                            <NewsSection
-                                imageSrc={jforce1}
-                                title="News Title 1"
-                                description="This is a short description for news item 1."
-                            />
-                            <NewsSection
-                                imageSrc={jforce2}
-                                title="News Title 2"
-                                description="This is a short description for news item 2."
-                            />
-                            <NewsSection
-                                imageSrc={jforce3}
-                                title="News Title 3"
-                                description="This is a short description for news item 3."
-                            />
+                {!isDashboard && (
+                    <nav className="w-64 bg-white shadow-lg p-4">
+                        <ul className="space-y-4">
+                            <li>
+                                <Link to="/admin" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
+                                    Dashboard
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/employees" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
+                                    Employees
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/inventories" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
+                                    Inventories
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/assignments" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
+                                    Assignments
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/admin/profile" className="block py-2 px-4 rounded hover:bg-primary hover:text-white transition">
+                                    Profile
+                                </Link>
+                            </li>
+                        </ul>
+                    </nav>
+                )}
+                <main className={`flex-1 p-2 ${isDashboard ? 'flex justify-center items-center' : ''}`}>
+                    {isDashboard && (
+                        <div className="flex flex-col justify-center items-center w-full h-[calc(100vh-4rem)]">
+                            <div className="grid grid-cols-2 gap-8 w-full max-w-screen-lg">
+                                <Link
+                                    to="/admin/employees"
+                                    className="flex justify-center items-center h-[20vh] bg-white rounded-lg hover:bg-primary hover:text-white transition transform hover:scale-105 duration-300 ease-in-out"
+                                    style={{ boxShadow: '0 4px 6px rgba(0, 0, 255, 0.5)' }}
+                                >
+                                    <span className="text-3xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>
+                                        Employees
+                                    </span>
+                                </Link>
+                                <Link
+                                    to="/admin/inventories"
+                                    className="flex justify-center items-center h-[20vh] bg-white rounded-lg hover:bg-primary hover:text-white transition transform hover:scale-105 duration-300 ease-in-out"
+                                    style={{ boxShadow: '0 4px 6px rgba(0, 0, 255, 0.5)' }}
+                                >
+                                    <span className="text-3xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>
+                                        Inventories
+                                    </span>
+                                </Link>
+                                <Link
+                                    to="/admin/assignments"
+                                    className="flex justify-center items-center h-[20vh] bg-white rounded-lg hover:bg-primary hover:text-white transition transform hover:scale-105 duration-300 ease-in-out"
+                                    style={{ boxShadow: '0 4px 6px rgba(0, 0, 255, 0.5)' }}
+                                >
+                                    <span className="text-3xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>
+                                        Assignments
+                                    </span>
+                                </Link>
+                                <Link
+                                    to="/admin/profile"
+                                    className="flex justify-center items-center h-[20vh] bg-white rounded-lg hover:bg-primary hover:text-white transition transform hover:scale-105 duration-300 ease-in-out"
+                                    style={{ boxShadow: '0 4px 6px rgba(0, 0, 255, 0.5)' }}
+                                >
+                                    <span className="text-3xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>
+                                        Profile
+                                    </span>
+                                </Link>
+                            </div>
                         </div>
                     )}
                     <Routes>
