@@ -121,7 +121,7 @@ const Employees = () => {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-6">Employees</h2>
+            <h2 className="text-2xl font-bold mb-6 text-white">Employees</h2>
             <table className="min-w-full bg-white rounded-lg shadow-lg">
                 <thead>
                 <tr key="header-row">
@@ -176,7 +176,7 @@ const Employees = () => {
                 </tbody>
             </table>
 
-            <h3 className="text-xl font-bold mt-6 mb-4">{editingEmployeeId ? 'Edit Employee' : 'Add New Employee'}</h3>
+            <h3 className="text-xl font-bold mt-6 mb-4 text-white">{editingEmployeeId ? 'Edit Employee' : 'Add New Employee'}</h3>
             <form onSubmit={handleAddOrUpdate} className="space-y-4">
                 <input
                     type="text"

@@ -16,7 +16,7 @@ const EmployeeProfile = () => {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-6">My Profile</h2>
+            <h2 className="text-2xl font-bold mb-6 text-white">My Profile</h2>
             <div className="bg-white p-6 rounded-lg shadow-lg">
                 <div className="mb-4">
                     <label className="block text-gray-700">New Password:</label>

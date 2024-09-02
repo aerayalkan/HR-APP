@@ -15,7 +15,7 @@ const MyInventories = () => {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-6">My Inventories</h2>
+            <h2 className="text-2xl font-bold mb-6 text-white">My Inventories</h2>
             <table className="min-w-full bg-white rounded-lg shadow-lg">
                 <thead>
                 <tr>

@@ -99,7 +99,7 @@ const Inventories = () => {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-6">Inventories</h2>
+            <h2 className="text-2xl font-bold mb-6 text-white">Inventories</h2>
 
             {/* Filter Section */}
             <div className="flex space-x-4 mb-6">
@@ -167,7 +167,7 @@ const Inventories = () => {
                 </tbody>
             </table>
             <div className="mt-6">
-                <h3 className="text-xl font-bold mb-2">{editingInventoryId ? 'Edit Inventory' : 'Add New Inventory'}</h3>
+                <h3 className="text-xl font-bold mb-2 text-white">{editingInventoryId ? 'Edit Inventory' : 'Add New Inventory'}</h3>
                 <input
                     type="text"
                     placeholder="Type"

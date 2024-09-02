@@ -16,7 +16,7 @@ const AdminProfile = () => {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-6">Admin Profile</h2>
+            <h2 className="text-2xl font-bold mb-6 text-white">Admin Profile</h2>
             <div className="bg-white p-6 rounded-lg shadow-lg">
                 <div className="mb-4">
                     <label className="block text-gray-700">First Name:</label>

@@ -65,7 +65,7 @@ const Assignments = () => {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-6">Assignments</h2>
+            <h2 className="text-2xl font-bold mb-6 text-white">Assignments</h2>
             <table className="min-w-full bg-white rounded-lg shadow-lg">
                 <thead>
                 <tr>
@@ -92,7 +92,7 @@ const Assignments = () => {
                 </tbody>
             </table>
             <div className="mt-6">
-                <h3 className="text-xl font-bold mb-2">Add New Assignment</h3>
+                <h3 className="text-xl font-bold mb-2 text-white">Add New Assignment</h3>
                 <input type="text" placeholder="Assigned By" value={newAssignment.assignedBy} onChange={(e) => setNewAssignment({ ...newAssignment, assignedBy: e.target.value })} className="border rounded-lg px-4 py-2 mb-2 w-full" />
                 <input type="date" placeholder="Assignment Date" value={newAssignment.assignmentDate} onChange={(e) => setNewAssignment({ ...newAssignment, assignmentDate: e.target.value })} className="border rounded-lg px-4 py-2 mb-2 w-full" />
 

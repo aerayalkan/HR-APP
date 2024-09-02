@@ -1,11 +1,12 @@
-import React from 'react';
+
+import React , {useState} from 'react';
 import { Link, Routes, Route, useLocation } from 'react-router-dom';
 import Employees from './Employees';
 import Inventories from './Inventories';
 import Assignments from './Assignments';
 import AdminProfile from './AdminProfile';
 import { logout } from '../utils/logout';
-
+/*
 const AdminDashboard = () => {
     const location = useLocation();
 
@@ -99,8 +100,8 @@ const AdminDashboard = () => {
                             </div>
                         </div>
                     )}
-                    <Routes>
-                        {/* Diğer admin menü sayfaları */}
+                    <Routes>*/
+                        {/* Diğer admin menü sayfaları */}/*
                         <Route path="employees" element={<Employees />} />
                         <Route path="inventories" element={<Inventories />} />
                         <Route path="assignments" element={<Assignments />} />
@@ -110,6 +111,225 @@ const AdminDashboard = () => {
             </div>
         </div>
     );
+};
+
+export default AdminDashboard;
+*/
+
+const AdminDashboard = () => {
+    const location = useLocation();
+    const [hovered, setHovered] = useState(null);
+
+    const isDashboard = location.pathname === '/admin';
+
+    const handleMouseEnter = (index) => {
+        setHovered(index);
+    };
+
+    const handleMouseLeave = () => {
+        setHovered(null);
+    };
+
+    const getLinkStyle = (index) => {
+        return hovered === index
+            ? { ...styles.dashboardLink, ...styles.dashboardLinkHover }
+            : styles.dashboardLink;
+    };
+
+    return (
+        <div style={styles.body}>
+            <header style={styles.header}>
+                <h1 style={styles.title}>Admin Dashboard</h1>
+                <button onClick={logout} style={styles.logoutButton}>Logout</button>
+            </header>
+            <div style={styles.mainContainer}>
+                {!isDashboard && (
+                    <nav style={styles.nav}>
+                        <ul style={styles.navList}>
+                            <li style={styles.navItem}>
+                                <Link to="/admin" style={styles.navLink}>
+                                    Dashboard
+                                </Link>
+                            </li>
+                            <li style={styles.navItem}>
+                                <Link to="/admin/employees" style={styles.navLink}>
+                                    Employees
+                                </Link>
+                            </li>
+                            <li style={styles.navItem}>
+                                <Link to="/admin/inventories" style={styles.navLink}>
+                                    Inventories
+                                </Link>
+                            </li>
+                            <li style={styles.navItem}>
+                                <Link to="/admin/assignments" style={styles.navLink}>
+                                    Assignments
+                                </Link>
+                            </li>
+                            <li style={styles.navItem}>
+                                <Link to="/admin/profile" style={styles.navLink}>
+                                    Profile
+                                </Link>
+                            </li>
+                        </ul>
+                    </nav>
+                )}
+                <main style={isDashboard ? styles.dashboardMain : styles.main}>
+                    {isDashboard && (
+                        <div style={styles.dashboardGrid}>
+                            <Link
+                                to="/admin/employees"
+                                style={getLinkStyle(0)}
+                                onMouseEnter={() => handleMouseEnter(0)}
+                                onMouseLeave={handleMouseLeave}
+                            >
+                                <span style={styles.dashboardLinkText}>Employees</span>
+                            </Link>
+                            <Link
+                                to="/admin/inventories"
+                                style={getLinkStyle(1)}
+                                onMouseEnter={() => handleMouseEnter(1)}
+                                onMouseLeave={handleMouseLeave}
+                            >
+                                <span style={styles.dashboardLinkText}>Inventories</span>
+                            </Link>
+                            <Link
+                                to="/admin/assignments"
+                                style={getLinkStyle(2)}
+                                onMouseEnter={() => handleMouseEnter(2)}
+                                onMouseLeave={handleMouseLeave}
+                            >
+                                <span style={styles.dashboardLinkText}>Assignments</span>
+                            </Link>
+                            <Link
+                                to="/admin/profile"
+                                style={getLinkStyle(3)}
+                                onMouseEnter={() => handleMouseEnter(3)}
+                                onMouseLeave={handleMouseLeave}
+                            >
+                                <span style={styles.dashboardLinkText}>Profile</span>
+                            </Link>
+                        </div>
+                    )}
+                    <Routes>
+                        <Route path="employees" element={<Employees />} />
+                        <Route path="inventories" element={<Inventories />} />
+                        <Route path="assignments" element={<Assignments />} />
+                        <Route path="profile" element={<AdminProfile />} />
+                    </Routes>
+                </main>
+            </div>
+        </div>
+    );
+};
+
+const styles = {
+    body: {
+        background: 'linear-gradient(135deg, #1E3C72, #2A5298, #6DD5FA, #FFFFFF)',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        fontFamily: "'Montserrat', sans-serif",
+    },
+    header: {
+        width: '100%',
+        backgroundColor: 'rgba(205,216,251,0.38)',
+        color: 'white',
+        padding: '1rem 0',
+        textAlign: 'center',
+        position: 'relative',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    },
+    title: {
+        fontSize: '2.5rem',
+        fontFamily: 'Playfair Display, serif',
+        margin: 0,
+    },
+    logoutButton: {
+        position: 'absolute',
+        right: '1rem',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        backgroundColor: '#FF4136',
+        color: 'white',
+        padding: '0.5rem 1rem',
+        borderRadius: '0.5rem',
+        border: 'none',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s',
+    },
+    mainContainer: {
+        display: 'flex',
+        width: '100%',
+        flex: 1,
+        paddingTop: '1rem',
+    },
+    nav: {
+        width: '250px',
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        padding: '1rem',
+        borderRadius: '1rem',
+        marginLeft: '1rem',
+    },
+    navList: {
+        listStyle: 'none',
+        padding: 0,
+    },
+    navItem: {
+        marginBottom: '1rem',
+    },
+    navLink: {
+        display: 'block',
+        padding: '0.75rem 1rem',
+        borderRadius: '0.5rem',
+        color: '#fff',
+        textDecoration: 'none',
+        fontWeight: '500',
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        transition: 'background-color 0.3s, color 0.3s',
+    },
+    dashboardMain: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+    },
+    main: {
+        flex: 1,
+        padding: '1rem',
+    },
+    dashboardGrid: {
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: '1rem',
+        width: '100%',
+        maxWidth: '900px',
+    },
+    dashboardLink: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '150px',
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        borderRadius: '1rem',
+        textDecoration: 'none',
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: '1.5rem',
+        transition: 'transform 0.3s, background-color 0.3s',
+        boxShadow: '0 4px 6px rgba(51, 54, 243, 0.3)',
+    },
+    dashboardLinkHover: {
+        transform: 'scale(1.05)', // Hover olduğunda kutuların büyümesi
+        backgroundColor: 'rgba(230,237,255,0.99)',
+        color: 'white',
+    },
+    dashboardLinkText: {
+        fontFamily: 'Playfair Display, serif',
+    },
 };
 
 export default AdminDashboard;
