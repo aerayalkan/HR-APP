@@ -24,7 +24,7 @@ public class StorageService {
     }
 
     public String storeFile(MultipartFile file) {
-        String filename = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
+        String filename = UUID.randomUUID() + "-" + file.getOriginalFilename();
         try {
             if (file.isEmpty()) {
                 throw new RuntimeException("Failed to store empty file.");

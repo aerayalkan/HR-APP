@@ -105,9 +105,9 @@ const Login = () => {
             localStorage.setItem('roles', JSON.stringify(roles));
 
             if (roles.includes('ROLE_ADMIN')) {
-                navigate('/admin/dashboard');
+                navigate('/admin');
             } else {
-                navigate('/employee/dashboard');
+                navigate('/employee');
             }
         } catch (error) {
             setError('Invalid credentials. Please try again.');
@@ -192,8 +192,8 @@ const styles = {
         textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
     },
     'input::placeholder': {
-        color: '#ffffff', // Placeholder metin rengini beyaz yapıyoruz
-        opacity: '1', // Opaklığı artırarak daha belirgin hale getiriyoruz
+        color: '#ffffff',
+        opacity: '1',
     },
     button: {
         marginTop: '20px',

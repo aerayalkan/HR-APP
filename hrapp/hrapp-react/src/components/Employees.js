@@ -4,7 +4,7 @@ import { getAllEmployees, deleteEmployee, createEmployee, updateEmployee, upload
 
 const Employees = () => {
     const [employees, setEmployees] = useState([]);
-    const [roles, setRoles] = useState([]); // Rol verilerini tutacak state
+    const [roles, setRoles] = useState([]);
     const [newEmployee, setNewEmployee] = useState({
         firstName: '',
         lastName: '',
@@ -18,7 +18,7 @@ const Employees = () => {
         profilePhoto: '',
         username: '',
         password: '',
-        roles: [] // Rol bilgilerini tutacak alan
+        roles: []
     });
     const [photoFile, setPhotoFile] = useState(null);
     const [editingEmployeeId, setEditingEmployeeId] = useState(null);
@@ -153,7 +153,7 @@ const Employees = () => {
                         <td className="px-4 py-2 border-b">{employee.employeeNumber}</td>
                         <td className="px-4 py-2 border-b">
                             {employee.profilePhoto ? (
-                                <img src={`http://localhost:8080/uploads/${employee.profilePhoto}`} alt="Profile" className="h-8 w-8 rounded-full" />
+                                <img src={`${employee.profilePhoto}`} alt="Profile" className="h-8 w-8 rounded-full" />
                             ) : 'N/A'}
                         </td>
                         <td className="px-4 py-2 border-b">{employee.username}</td>

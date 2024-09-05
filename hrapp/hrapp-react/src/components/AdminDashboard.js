@@ -323,7 +323,7 @@ const styles = {
         boxShadow: '0 4px 6px rgba(51, 54, 243, 0.3)',
     },
     dashboardLinkHover: {
-        transform: 'scale(1.05)', // Hover olduğunda kutuların büyümesi
+        transform: 'scale(1.05)',
         backgroundColor: 'rgba(230,237,255,0.99)',
         color: 'white',
     },

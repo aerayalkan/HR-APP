@@ -6,19 +6,26 @@ import EmployeeDashboard from './components/EmployeeDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
+    const token = localStorage.getItem('token');
+
+
     return (
         <Router>
             <Routes>
+
                 <Route path="/" element={<Login />} />
                 <Route path="/login" element={<Login />} />
+
                 <Route
-                    path="/admin/dashboard/*"
+                  //  path="/admin/dashboard/*"
+               //
                     path="/admin/*"
+                 //   path=       "*"
                     element={<ProtectedRoute element={AdminDashboard} roles={['ROLE_ADMIN']} />}
 
                 />
                 <Route
-                    path="/employee/dashboard/*"
+                   // path="/employee/dashboard/*"
                     path="/employee/*"
                     element={<ProtectedRoute element={EmployeeDashboard} roles={['ROLE_EMPLOYEE']} />}
                 />

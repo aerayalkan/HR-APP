@@ -81,7 +81,7 @@ const Assignments = () => {
                     <tr key={assignment.id} className="hover:bg-gray-100">
                         <td className="px-4 py-2 border-b">{assignment?.assignedBy}</td>
                         <td className="px-4 py-2 border-b">{assignment?.assignmentDate}</td>
-                        <td className="px-4 py-2 border-b">{assignment?.inventory?.model}</td> {/* Inventory bilgisi gösterilebilir */}
+                        <td className="px-4 py-2 border-b">{assignment?.inventory?.model}</td>
                         <td className="px-4 py-2 border-b">{assignment?.employees?.firstName} {assignment?.employees?.lastName}</td>
                         <td className="px-4 py-2 border-b">
                             <button className="bg-secondary text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition" onClick={() => handleUpdate(assignment.id)}>Edit</button>
